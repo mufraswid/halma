@@ -1,0 +1,8 @@
+.mainpage-container {
+  width: 100vw;
+  height: 100vh;
+  background-image: url("../assets/bg-diamonds.png");
+  background-repeat: repeat;
+  align-items: center;
+  justify-content: center;
+}

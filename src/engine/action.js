@@ -1,13 +1,13 @@
 /**
- * @desc Kelas Aksi: merepresentasikan aksi dari suatu pemain dalam memindahkan bidak
+ * @desc Kelas Action: merepresentasikan aksi dari suatu pemain dalam memindahkan bidak
  */
-class Aksi {
+class Action {
 
     /**
      * @desc Konstruktor
      * @param {char} player 
-     * @param {Koordinat} beforeCoord 
-     * @param {Koordinat} afterCoord 
+     * @param {Coordinate} beforeCoord 
+     * @param {Coordinate} afterCoord 
      */
     constructor(player, beforeCoord, afterCoord) {
         this.executor = player;
@@ -38,7 +38,7 @@ class Aksi {
 
     /**
      * @desc Mengecek apakah suatu aksi merupakan aksi lompat
-     * @param {PapanHalma} board 
+     * @param {HalmaBoard} board 
      */
     isHopping(board) {
         let xBefore = this.beforeCoord.getX()
@@ -49,28 +49,29 @@ class Aksi {
         let xDiff = Math.abs(xAfter - xBefore)
         let yDiff = Math.abs(yAfter - yBefore)
 
-        if(xDiff > 2 || yDiff > 2 || xDiff === 1 || yDiff === 1) {
+        if(xDiff > 2 || yDiff > 2 || xDiff === 1 || yDiff === 1 || (xDiff === 0 && yDiff === 0)) {
             return false;
         }
 
+        let xMod = 0;
+        let yMod = 0;
         if(xDiff === 0 && yDiff === 2) {
-            let yMod = (yAfter > yBefore) ? 1 : -1;
-            return board[xBefore][yBefore + yMod] !== 'X'
+            yMod = (yAfter > yBefore) ? 1 : -1;
 
         } else if (yDiff === 0 && xDiff === 2) {
-            let xMod = (xAfter > xBefore) ? 1 : -1;
-            return board[xBefore + xMod][yBefore] !== 'X'
-
+            xMod = (xAfter > xBefore) ? 1 : -1;
+        
         } else { /* Diagonal Hopping */
-            let xMod = (xAfter > xBefore) ? 1 : -1;
-            let yMod = (yAfter > yBefore) ? 1 : -1;
-            return board[xBefore + xMod][yBefore + yMod] !== 'X';
+            xMod = (xAfter > xBefore) ? 1 : -1;
+            yMod = (yAfter > yBefore) ? 1 : -1;
         }
+
+        return board[xBefore + xMod][yBefore + yMod] !== 'X';
     }
 
     /**
      * @desc mengecek apakah aksi yang dilakukan pemain legal
-     * @param {PapanHalma} board 
+     * @param {HalmaBoard} board 
      */
     isLegal(board) {
         let xBefore = this.beforeCoord.getX()

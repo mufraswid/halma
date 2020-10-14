@@ -1,10 +1,10 @@
 /**
- * @desc Kelas PapanHalma: digunakan untuk merepresentasikan papan permainan halma
+ * @desc Kelas HalmaBoard: digunakan untuk merepresentasikan papan permainan halma
  */
-class PapanHalma {
+class HalmaBoard {
 
     /**
-     * @desc Konstuktor papan halma
+     * @desc Konstuktor
      * @param {integer} size 
      */
     constructor(size) {
@@ -23,7 +23,7 @@ class PapanHalma {
 
     /**
      * @desc Update state papan setelah dilakukan aksi
-     * @param {Aksi} action 
+     * @param {Action} action 
      */
     updateBoard(action) {
         let player = action.getExecutor();
@@ -34,6 +34,14 @@ class PapanHalma {
 
         this.state[xBefore][yBefore] = 'X';
         this.state[xAfter][yAfter] = player;
+    }
+
+    objFunc() {
+        /* Fungsi objektif */
+    }
+
+    isFinalState() {
+        /* cek apakah sudah final state */ 
     }
 
 }

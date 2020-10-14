@@ -1,10 +1,10 @@
 /**
- * @desc Kelas Koordinat: merepresentasikan lokasi bidak
+ * @desc Kelas Coordinate: merepresentasikan lokasi bidak
  */
-class Koordinat {
+class Coordinate {
 
     /**
-     * @desc Konstruktor Koordinat
+     * @desc Konstruktor
      * @param {integer} xcoord Koordinat-x bidak
      * @param {integer} ycoord Koordinat-y bidak
      */

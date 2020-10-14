@@ -7,31 +7,4 @@ class HalmaAI {
         this.maxDepth = maxDepth;
     }
 
-    objFunc(state) {
-        /* Fungsi objektif */
-    }
-
-    isFinalState(state) {
-        /* cek apakah sudah final state */ 
-    }
-
-
-    min(state, curDepth) {
-        if(curDepth === this.maxDepth || this.isFinalState(state)) {
-            return this.objFunc(state);
-        }
-
-        /* TBD */
-
-    }
-
-
-    max(state, curDepth) {
-        if(curDepth === this.maxDepth || this.isFinalState(state)) {
-            return this.objFunc(state);
-        }
-
-        /* TBD */
-
-    }
 }

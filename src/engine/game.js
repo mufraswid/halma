@@ -5,7 +5,7 @@ class Game {
 
     /**
      * @desc Konstruktor
-     * @param {char} mode 
+     * @param {string} mode Keterangan => PC: Pemain-AI, PCL: Pemain-AILocalSearch, CCL: AI-AILocalSearch
      * @param {integer} tlimit 
      * @param {integer} bsize 
      */
@@ -14,19 +14,38 @@ class Game {
         this.bsize = bsize
         this.tlimit = tlimit
 
-        this.gameBoard = new HalmaBoard(bsize)
-        
-        this.players = []
-        if(this.mode = 'P') {
-            this.players.push('P')
-        } else {
-            this.players.push('C')
-        }
-        this.players.push('C')
+        this.gameBoard = new HalmaBoard(this.bsize)
 
         this.actionBuffer = []
-        this.hopBuffer = []
-        this.playerTurn = this.players[0]
+        this.timer = new Timer(this.nextTurn(), this.tlimit)
+        
+        this.initAI()
+        this.initTurn()
+    }
+
+    /**
+     * @desc Inisialisasi AI yang diperlukan
+     */
+    initAI() {
+        if(this.mode === 'PC' || this.mode === 'CCL') {
+            /* this.MinMaxAI = new HalmaAI() */
+        } else if(this.mode === 'PCL' || this.mode === 'CCL') {
+            /* this.MinMaxAILS = new HalmaAILS() */
+        }
+    }
+
+    /**
+     * @desc Inisialisasi giliran pertama game
+     */
+    initTurn() {
+        if(this.mode === 'PC' || this.mode === 'PCL') {
+            this.turn = 'P'
+        } else {
+            this.turn = 'C1'
+        }
+
+        /* start timer */
+        this.timer.start()
     }
 
     /**
@@ -34,28 +53,51 @@ class Game {
      * @param {integer} x 
      * @param {integer} y 
      */
-    async actionListener(x, y) {
+    actionListener(x, y) {
+        /* Block if not player turn */
+        if(this.turn !== 'P') return
+
         let step = new Coordinate(x, y)
         this.actionBuffer.push(step)
         if(this.actionBuffer.length == 2) {
-            let act = new Action(this.playerTurn, this.actionBuffer[0], this.actionBuffer[1])
+            let act = new Action(this.turn, this.actionBuffer[0], this.actionBuffer[1])
 
+            this.actionBuffer = []
             if(!act.isLegal()) {
                 /* NOT LEGAL */
                 return
             }
     
             this.gameBoard.updateBoard(act)
-            this.actionBuffer = []
-            this.run()
+            /* render board */
         }
     }
 
     /**
-     * @desc Runner permainan
+     * @desc Melakukan ganti giliran di permainan
      */
-    run() {
-        /* Main Flow */
+    nextTurn() {
+        /* Stop running timer */
+        this.timer.stop()
+
+        if(this.mode === 'PC' || this.mode === 'PCL') {
+            this.turn = (this.turn === 'P') ? 'C2' : 'P'
+        } else {
+            this.turn = (this.turn === 'C1') ? 'C2' : 'C1'
+        }
+
+        /* Start timer again */
+        this.timer.start()
+
+        /* Return if player turn */
+        if(this.turn === 'P') return
+
+        /* AI move */
+        if(this.turn === 'C1') {
+            /* AI process */
+        } else {
+            /* AI process */
+        }
     }
 
 }
@@ -68,13 +110,14 @@ let bsize = localStorage.getItem('bsize')
 /* Init game */
 let thisGame = new Game(mode, tlimit, bsize)
 
-/* If player mode, initialize listeners on cells */
-if(mode === 'P') {
+/* Bila mode pemain, open listener */
+if(mode === 'PC' || mode === 'PCL') {
     for(var i = 1; i <= bsize; i++) {
         $('#cell' + i).on('click', () => 
             thisGame.actionListener( 
                 $('#cell' + i).attr('x'),
                 $('#cell' + i).attr('y')
-            ))
+            )
+        )
     }
 }

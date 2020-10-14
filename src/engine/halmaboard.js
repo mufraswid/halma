@@ -9,7 +9,7 @@ class HalmaBoard {
      */
     constructor(size) {
         this.size = size;
-        this.state = [];
+        this.board = [];
 
         var innerRow;
         for(var i = 1; i <= this.size; i++) {
@@ -17,12 +17,19 @@ class HalmaBoard {
             for(var j = 1; j <= this.size; j++) {
                 innerRow.push('X');
             }
-            this.state.push(innerRow);
+            this.board.push(innerRow);
         }
     }
 
     /**
-     * @desc Update state papan setelah dilakukan aksi
+     * @desc Getter state papan
+     */
+    getBoard() {
+        return this.board;
+    }
+
+    /**
+     * @desc Update board papan setelah dilakukan aksi
      * @param {Action} action 
      */
     updateBoard(action) {
@@ -32,8 +39,8 @@ class HalmaBoard {
         let xAfter = action.getAfterCoord().getX();
         let yAfter = action.getAfterCoord().getY();
 
-        this.state[xBefore][yBefore] = 'X';
-        this.state[xAfter][yAfter] = player;
+        this.board[xBefore][yBefore] = 'X';
+        this.board[xAfter][yAfter] = player;
     }
 
     objFunc() {

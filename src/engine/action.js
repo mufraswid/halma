@@ -66,7 +66,7 @@ class Action {
             yMod = (yAfter > yBefore) ? 1 : -1;
         }
 
-        return board[xBefore + xMod][yBefore + yMod] !== 'X';
+        return board.getBoard()[xBefore + xMod][yBefore + yMod] !== 'X';
     }
 
     /**
@@ -80,8 +80,8 @@ class Action {
         let yAfter = this.afterCoord.getY()
         
         /* Legal conditions */
-        let pieceIsExecutors = board[xBefore][yBefore] === this.executor;
-        let afterIsEmpty = board[xAfter][yAfter] === 'X';
+        let pieceIsExecutors = board.getBoard()[xBefore][yBefore] === this.executor;
+        let afterIsEmpty = board.getBoard()[xAfter][yAfter] === 'X';
         let moveOnProximity = Math.abs(xAfter - xBefore) === 1 || Math.abs(yAfter - yBefore) === 1;
 
         return pieceIsExecutors && afterIsEmpty && (moveOnProximity || this.isHopping(board));

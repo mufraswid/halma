@@ -68,6 +68,14 @@ function actionListener(ncell) {
             console.log("NOT LEGAL")
             return
         }
+
+        if(hopHistory.length > 0) {
+            /* Kalau yang dijalankan bukan bidak sebelumnya, NOT LEGAL */
+            if(!hopHistory[hopHistory.length - 1].equal(act.getBeforeCoord())) {
+                console.log('NOT LEGAL')
+                return
+            }
+        }
         
         /* Update board */
         gameBoard.updateBoard(act)
@@ -75,6 +83,8 @@ function actionListener(ncell) {
         /* If not hopping, proceed to next turn */
         if(!act.isHopping(gameBoard)) {
             nextTurn()
+        } else { /* If hopping, push to history to compare to next hop */
+            hopHistory.push(act.getAfterCoord())
         }
     }
 }
@@ -86,6 +96,7 @@ function nextTurn() {
     /* Stop timer, bersihkan actionBuffer */
     timer.stop()
     actionBuffer = []
+    hopHistory = []
 
     if(mode == 'PC' || mode == 'PCL') {
         turn = (turn == 'P') ? 'C' : 'P'
@@ -133,6 +144,7 @@ var bsize = 8
 /* Inti components */
 var gameBoard = new HalmaBoard(bsize, mode)
 var actionBuffer = []
+var hopHistory = []
 var timer = new Timer(nextTurn, tlimit)
 
 /* Init game */

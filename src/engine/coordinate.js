@@ -26,4 +26,12 @@ class Coordinate {
     getY() {
         return this.ycoord;
     }
+
+    /**
+     * @desc Operator equal
+     * @param {Coordinate} other
+     */
+    equal(other) {
+        return this.xcoord == other.getX() && this.ycoord == other.getY()
+    }
 }

@@ -1,3 +1,7 @@
+
+/**
+ * @desc Inisialisasi AI yang bermain
+ */
 function initAI() {
     if(mode == 'PC' || mode == 'CCL') {
         /* MinMaxAI = new HalmaAI() */
@@ -6,11 +10,14 @@ function initAI() {
     }
 }
 
+/**
+ * @desc Memulai permainan dengan menentukan giliran dan start timer: aktif saat tekan 'START GAME'
+ */
 function initTurn() {
     if(mode == 'PC' || mode == 'PCL') {
         turn = 'P'
     } else {
-        turn = 'C1'
+        turn = 'K'
     }
 
     /* start timer */
@@ -18,6 +25,9 @@ function initTurn() {
     alert("Time started!")
 }
 
+/**
+ * @desc Inisialisasi listener untuk pemain manusia
+ */
 function initListener() {
     var arr = []
     for(var i = 0; i < bsize*bsize; i++) {
@@ -31,9 +41,13 @@ function initListener() {
     arr.forEach(listen)
 }
 
+/**
+ * @desc Proses masukan aksi oleh pemain manusia
+ * @param {integer} ncell 
+ */
 function actionListener(ncell) {
     /* Convert to coords */
-    let x = ncell % 4
+    let x = ncell % 8
     let y = Math.floor(ncell/8)
 
     console.log(x, y)
@@ -59,21 +73,27 @@ function actionListener(ncell) {
         gameBoard.updateBoard(act)
         
         /* If not hopping, proceed to next turn */
-        if(!act.isHopping()) {
+        if(!act.isHopping(gameBoard)) {
             nextTurn()
         }
     }
 }
 
+/**
+ * @desc Melakukan pergantian giliran permainan
+ */
 function nextTurn() {
-    /* Stop timer */
+    /* Stop timer, bersihkan actionBuffer */
     timer.stop()
+    actionBuffer = []
 
     if(mode == 'PC' || mode == 'PCL') {
-        turn = (turn == 'P') ? 'C2' : 'P'
+        turn = (turn == 'P') ? 'C' : 'P'
     } else {
-        turn = (turn == 'C1') ? 'C2' : 'C1'
+        turn = (turn == 'K') ? 'C' : 'K'
     }
+
+    console.log('NEXT TURN:' + turn)
 
     /* Start timer again */
     timer.start()
@@ -82,13 +102,16 @@ function nextTurn() {
     if(turn == 'P') return
 
     /* AI move */
-    if(turn == 'C1') {
+    if(turn == 'K') {
         /* AI process */
     } else {
         /* AI process */
     }
 }
 
+/**
+ * @desc Memulai permainan
+ */
 function initGame() {
     initAI()
     if(mode == 'PC' || mode == 'PCL') {
@@ -108,7 +131,7 @@ var tlimit = 6000
 var bsize = 8
 
 /* Inti components */
-var gameBoard = new HalmaBoard(bsize)
+var gameBoard = new HalmaBoard(bsize, mode)
 var actionBuffer = []
 var timer = new Timer(nextTurn, tlimit)
 

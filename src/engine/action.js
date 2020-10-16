@@ -66,7 +66,15 @@ class Action {
             yMod = (yAfter > yBefore) ? 1 : -1;
         }
 
-        return board.getBoard()[xBefore + xMod][yBefore + yMod] !== 'X';
+        return board.getBoard()[xBefore + xMod][yBefore + yMod] != '-';
+    }
+
+    /**
+     * @desc Mengecek apakah langkah masuk ke rumah sendiri atau tidak
+     * @param {HalmaBoard} board 
+     */
+    isGoBackHome(board) {
+        return !board.isOnHome(this.executor, this.beforeCoord) && board.isOnHome(this.executor, this.afterCoord)
     }
 
     /**
@@ -81,9 +89,9 @@ class Action {
         
         /* Legal conditions */
         let pieceIsExecutors = board.getBoard()[xBefore][yBefore] === this.executor;
-        let afterIsEmpty = board.getBoard()[xAfter][yAfter] === 'X';
+        let afterIsEmpty = board.getBoard()[xAfter][yAfter] === '-';
         let moveOnProximity = Math.abs(xAfter - xBefore) === 1 || Math.abs(yAfter - yBefore) === 1;
 
-        return pieceIsExecutors && afterIsEmpty && (moveOnProximity || this.isHopping(board));
+        return pieceIsExecutors && afterIsEmpty && (moveOnProximity || this.isHopping(board)) && !this.isGoBackHome(board);
     }
 }

@@ -1,123 +1,116 @@
-/**
- * @desc Kelas Game: merepresentasikan flow permainan
- */
-class Game {
+function initAI() {
+    if(mode == 'PC' || mode == 'CCL') {
+        /* MinMaxAI = new HalmaAI() */
+    } else if(mode == 'PCL' || mode == 'CCL') {
+        /* MinMaxAILS = new HalmaAILS() */
+    }
+}
 
-    /**
-     * @desc Konstruktor
-     * @param {string} mode Keterangan => PC: Pemain-AI, PCL: Pemain-AILocalSearch, CCL: AI-AILocalSearch
-     * @param {integer} tlimit 
-     * @param {integer} bsize 
-     */
-    constructor(mode, tlimit, bsize=16) {
-        this.mode = mode
-        this.bsize = bsize
-        this.tlimit = tlimit
+function initTurn() {
+    if(mode == 'PC' || mode == 'PCL') {
+        turn = 'P'
+    } else {
+        turn = 'C1'
+    }
 
-        this.gameBoard = new HalmaBoard(this.bsize)
+    /* start timer */
+    timer.start()
+    alert("Time started!")
+}
 
-        this.actionBuffer = []
-        this.timer = new Timer(this.nextTurn(), this.tlimit)
+function initListener() {
+    var arr = []
+    for(var i = 0; i < bsize*bsize; i++) {
+        arr.push(i)
+    }
+
+    function listen(item, _) {
+        $('#cell' + item).on('click', () => actionListener(item))
+    }
+
+    arr.forEach(listen)
+}
+
+function actionListener(ncell) {
+    /* Convert to coords */
+    let x = ncell % 4
+    let y = Math.floor(ncell/8)
+
+    console.log(x, y)
+
+    /* Block if not player turn */
+    if(turn != 'P') {
+        console.log("THIS IS NOT YOUR TURN!")
+        return
+    }
+
+    let step = new Coordinate(x, y)
+    actionBuffer.push(step)
+    if(actionBuffer.length == 2) {
+        let act = new Action(turn, actionBuffer[0], actionBuffer[1])
+
+        actionBuffer = []
+        if(!act.isLegal(gameBoard)) {
+            console.log("NOT LEGAL")
+            return
+        }
         
-        this.initAI()
-        this.initTurn()
-    }
-
-    /**
-     * @desc Inisialisasi AI yang diperlukan
-     */
-    initAI() {
-        if(this.mode === 'PC' || this.mode === 'CCL') {
-            /* this.MinMaxAI = new HalmaAI() */
-        } else if(this.mode === 'PCL' || this.mode === 'CCL') {
-            /* this.MinMaxAILS = new HalmaAILS() */
+        /* Update board */
+        gameBoard.updateBoard(act)
+        
+        /* If not hopping, proceed to next turn */
+        if(!act.isHopping()) {
+            nextTurn()
         }
     }
+}
 
-    /**
-     * @desc Inisialisasi giliran pertama game
-     */
-    initTurn() {
-        if(this.mode === 'PC' || this.mode === 'PCL') {
-            this.turn = 'P'
-        } else {
-            this.turn = 'C1'
-        }
+function nextTurn() {
+    /* Stop timer */
+    timer.stop()
 
-        /* start timer */
-        this.timer.start()
+    if(mode == 'PC' || mode == 'PCL') {
+        turn = (turn == 'P') ? 'C2' : 'P'
+    } else {
+        turn = (turn == 'C1') ? 'C2' : 'C1'
     }
 
-    /**
-     * @desc Listen aksi yang diinput oleh pemain untuk diproses
-     * @param {integer} x 
-     * @param {integer} y 
-     */
-    actionListener(x, y) {
-        /* Block if not player turn */
-        if(this.turn !== 'P') return
+    /* Start timer again */
+    timer.start()
 
-        let step = new Coordinate(x, y)
-        this.actionBuffer.push(step)
-        if(this.actionBuffer.length == 2) {
-            let act = new Action(this.turn, this.actionBuffer[0], this.actionBuffer[1])
+    /* Return if player turn */
+    if(turn == 'P') return
 
-            this.actionBuffer = []
-            if(!act.isLegal()) {
-                /* NOT LEGAL */
-                return
-            }
-    
-            this.gameBoard.updateBoard(act)
-            /* render board */
-        }
+    /* AI move */
+    if(turn == 'C1') {
+        /* AI process */
+    } else {
+        /* AI process */
+    }
+}
+
+function initGame() {
+    initAI()
+    if(mode == 'PC' || mode == 'PCL') {
+        initListener()
     }
 
-    /**
-     * @desc Melakukan ganti giliran di permainan
-     */
-    nextTurn() {
-        /* Stop running timer */
-        this.timer.stop()
-
-        if(this.mode === 'PC' || this.mode === 'PCL') {
-            this.turn = (this.turn === 'P') ? 'C2' : 'P'
-        } else {
-            this.turn = (this.turn === 'C1') ? 'C2' : 'C1'
-        }
-
-        /* Start timer again */
-        this.timer.start()
-
-        /* Return if player turn */
-        if(this.turn === 'P') return
-
-        /* AI move */
-        if(this.turn === 'C1') {
-            /* AI process */
-        } else {
-            /* AI process */
-        }
-    }
-
+    /* for testing purposes */
+    initTurn()
 }
 
 /* Get param */
-let mode = localStorage.getItem('mode')
-let tlimit = localStorage.getItem('tlimit')
-let bsize = localStorage.getItem('bsize')
+// var mode = localStorage.getItem('mode')
+// var tlimit = localStorage.getItem('tlimit')
+// var bsize = localStorage.getItem('bsize')
+var mode = 'PC'
+var tlimit = 6000
+var bsize = 8
+
+/* Inti components */
+var gameBoard = new HalmaBoard(bsize)
+var actionBuffer = []
+var timer = new Timer(nextTurn, tlimit)
 
 /* Init game */
-let thisGame = new Game(mode, tlimit, bsize)
-
-/* Bila mode pemain, open listener */
-if(mode === 'PC' || mode === 'PCL') {
-    for(var i = 1; i <= bsize; i++) {
-        $('#cell' + i).on('click', () => 
-            thisGame.actionListener( 
-                $('#cell' + i).attr('x'),
-                $('#cell' + i).attr('y')
-            )
-        )
-    }
-}
+initGame()

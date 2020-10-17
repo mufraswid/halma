@@ -98,6 +98,11 @@ function nextTurn() {
     actionBuffer = []
     hopHistory = []
 
+    if(gameBoard.isFinalState() > 0) {
+        endGame(gameBoard.isFinalState())
+        return
+    }
+
     if(mode == 'PC' || mode == 'PCL') {
         turn = (turn == 'P') ? 'C' : 'P'
     } else {
@@ -118,6 +123,15 @@ function nextTurn() {
     } else {
         /* AI process */
     }
+}
+
+/**
+ * @desc Mengakhiri permainan dengan pemenang
+ * @param {integer} winner 
+ */
+function endGame(winner) {
+    timer.stop()
+    alert("Pemenangnya adalah Player" + winner +"!")
 }
 
 /**

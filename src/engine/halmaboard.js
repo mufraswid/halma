@@ -28,6 +28,9 @@ class HalmaBoard {
 
         this.player2 = 'C'
 
+        this.player1Pieces = []
+        this.player2Pieces = []
+
         this.initBoard()
         this.renderBoard()
     }
@@ -44,13 +47,20 @@ class HalmaBoard {
         
         for(var i = 0; i < 4 ; i++) {
             for(var j = 0; j < offset; j++) {
+                /* Render ke papan */
                 this.board[xHomePoint + i][yHomePoint - j] = this.player1
                 this.board[xEnemyPoint - i][yEnemyPoint + j] = this.player2
+                /* Catat lokasi bidak setiap pemain */
+                this.player1Pieces.push(new Coordinate(xHomePoint + i, yHomePoint - j))
+                this.player2Pieces.push(new Coordinate(xEnemyPoint - i, yEnemyPoint + j))
             }
             offset -= 1
         }
     }
 
+    /**
+     * @desc Render papan ke 
+     */
     renderBoard() {
         for(var i = 0; i < this.size * this.size; i++) {
             let x = i % 8
@@ -91,8 +101,29 @@ class HalmaBoard {
         /* Fungsi objektif */
     }
 
+    /**
+     * @desc Cek apakah keadaan papan sudah final state
+     */
     isFinalState() {
-        /* cek apakah sudah final state */ 
+        var player1Win = true
+        var player2Win = true
+        for(var i = 0; i < 10; i++) {
+            if(!this.isOnHome(this.player2, this.player1Pieces[i])) {
+                player1Win = false
+                break
+            }
+        }
+
+        for(var i = 0; i < 10; i++) {
+            if(!this.isOnHome(this.player1, this.player2Pieces[i])) {
+                player2Win = false
+                break
+            }
+        }
+
+        if(player1Win) return 1
+        if(player2Win) return 2
+        return 0
     }
 
     /**
@@ -104,7 +135,7 @@ class HalmaBoard {
         if(player == 'P' || player == 'K') {
             return coord.getY() >= coord.getX() + this.size - 4
         } else {
-            return coord.getY() >= coord.getX() - this.size + 4
+            return coord.getY() <= coord.getX() - this.size + 4
         }
     }
 }

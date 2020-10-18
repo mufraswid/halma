@@ -12,15 +12,15 @@ class HalmaBoard {
         this.board = [];
 
         var innerRow;
-        for(var i = 1; i <= this.size; i++) {
+        for (var i = 1; i <= this.size; i++) {
             innerRow = []
-            for(var j = 1; j <= this.size; j++) {
+            for (var j = 1; j <= this.size; j++) {
                 innerRow.push('-');
             }
             this.board.push(innerRow);
         }
 
-        if(mode == 'PC' || mode == 'PCL') {
+        if (mode == 'PC' || mode == 'PCL') {
             this.player1 = 'P'
         } else {
             this.player1 = 'K'
@@ -30,12 +30,6 @@ class HalmaBoard {
 
         this.player1Pieces = []
         this.player2Pieces = []
-
-        // this.player1Color = localStorage.getItem('p1color')
-        // this.player2Color = localStorage.getItem('p2color')
-        /* testing purposes */
-        this.player1Color = 'red'
-        this.player2Color = 'green'
     }
 
     /**
@@ -47,9 +41,9 @@ class HalmaBoard {
         let xEnemyPoint = this.size - 1
         let yEnemyPoint = 0
         var offset = 4
-        
-        for(var i = 0; i < 4 ; i++) {
-            for(var j = 0; j < offset; j++) {
+
+        for (var i = 0; i < 4; i++) {
+            for (var j = 0; j < offset; j++) {
                 /* Render ke papan */
                 this.board[xHomePoint + i][yHomePoint - j] = this.player1
                 this.board[xEnemyPoint - i][yEnemyPoint + j] = this.player2
@@ -65,17 +59,10 @@ class HalmaBoard {
      * @desc Render papan ke page
      */
     renderBoard() {
-        for(var i = 0; i < this.size * this.size; i++) {
+        for (var i = 0; i < this.size * this.size; i++) {
             let x = i % 8
-            let y = Math.floor(i/8)
+            let y = Math.floor(i / 8)
             $('#cell' + i).html(this.board[x][y])
-            if(this.board[x][y] == this.player1) {
-                $('#cell' + i).css('background-color', this.player1Color)
-            } else if(this.board[x][y] == this.player2) {
-                $('#cell' + i).css('background-color', this.player2Color)
-            } else {
-                $('#cell' + i).css('background-color', 'white')
-            }
         }
     }
 
@@ -131,18 +118,6 @@ class HalmaBoard {
 
         this.board[xBefore][yBefore] = '-';
         this.board[xAfter][yAfter] = player;
-        var playerPieces = (player == this.player1) ? this.player1Pieces : this.player2Pieces
-
-        for(var i = 0; i < 10; i++) {
-            if (playerPieces[i].equal(action.getBeforeCoord())) {
-                if (player == this.player1) {
-                    this.player1Pieces[i] = action.getAfterCoord()
-                } else {
-                    this.player2Pieces[i] = action.getAfterCoord()
-                }
-                break
-            }
-        }
     }
 
     objFunc() {
@@ -155,22 +130,22 @@ class HalmaBoard {
     isFinalState() {
         var player1Win = true
         var player2Win = true
-        for(var i = 0; i < 10; i++) {
-            if(!this.isOnHome(this.player2, this.player1Pieces[i])) {
+        for (var i = 0; i < 10; i++) {
+            if (!this.isOnHome(this.player2, this.player1Pieces[i])) {
                 player1Win = false
                 break
             }
         }
 
-        for(var i = 0; i < 10; i++) {
-            if(!this.isOnHome(this.player1, this.player2Pieces[i])) {
+        for (var i = 0; i < 10; i++) {
+            if (!this.isOnHome(this.player1, this.player2Pieces[i])) {
                 player2Win = false
                 break
             }
         }
 
-        if(player1Win) return 1
-        if(player2Win) return 2
+        if (player1Win) return 1
+        if (player2Win) return 2
         return 0
     }
 
@@ -180,7 +155,7 @@ class HalmaBoard {
      * @param {Coordinate} coord 
      */
     isOnHome(player, coord) {
-        if(player == 'P' || player == 'K') {
+        if (player == 'P' || player == 'K') {
             return coord.getY() >= coord.getX() + this.size - 4
         } else {
             return coord.getY() <= coord.getX() - this.size + 4

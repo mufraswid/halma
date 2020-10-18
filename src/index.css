@@ -112,7 +112,7 @@ html {
   --accent2: #6886e7;
   --black-true: #000;
 
-  background-color: var(--primary);
+  /* background-color: var(--primary); */
 }
 /* # End of Typography
    * ----------------------- */

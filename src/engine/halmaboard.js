@@ -118,6 +118,18 @@ class HalmaBoard {
 
         this.board[xBefore][yBefore] = '-';
         this.board[xAfter][yAfter] = player;
+        var playerPieces = (player == this.player1) ? this.player1Pieces : this.player2Pieces
+
+        for(var i = 0; i < 10; i++) {
+            if (playerPieces[i].equal(action.getBeforeCoord())) {
+                if (player == this.player1) {
+                    this.player1Pieces[i] = action.getAfterCoord()
+                } else {
+                    this.player2Pieces[i] = action.getAfterCoord()
+                }
+                break
+            }
+        }
     }
 
     objFunc() {

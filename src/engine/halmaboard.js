@@ -30,9 +30,6 @@ class HalmaBoard {
 
         this.player1Pieces = []
         this.player2Pieces = []
-
-        this.initBoard()
-        this.renderBoard()
     }
 
     /**
@@ -59,7 +56,7 @@ class HalmaBoard {
     }
 
     /**
-     * @desc Render papan ke 
+     * @desc Render papan ke page
      */
     renderBoard() {
         for(var i = 0; i < this.size * this.size; i++) {
@@ -96,6 +93,15 @@ class HalmaBoard {
     }
 
     /**
+     * @desc Mengkopi state ke objek ini dan mengembalikan objek ini
+     * @param {array[array[]]} state 
+     */
+    copyState(state) {
+        this.board = state
+        return this
+    }
+
+    /**
      * @desc Update board papan setelah dilakukan aksi
      * @param {Action} action 
      */
@@ -108,12 +114,6 @@ class HalmaBoard {
 
         this.board[xBefore][yBefore] = '-';
         this.board[xAfter][yAfter] = player;
-
-        let idBef = yBefore * 8 + xBefore
-        let idAf = yAfter * 8 + xAfter
-
-        $('#cell' + idBef).html('-')
-        $('#cell' + idAf).html(player)
     }
 
     objFunc() {

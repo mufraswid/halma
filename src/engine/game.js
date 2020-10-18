@@ -79,6 +79,8 @@ function actionListener(ncell) {
         
         /* Update board */
         gameBoard.updateBoard(act)
+        /* Render board */
+        gameBoard.renderBoard()
         
         /* If not hopping, proceed to next turn */
         if(!act.isHopping(gameBoard)) {
@@ -157,6 +159,8 @@ var bsize = 8
 
 /* Inti components */
 var gameBoard = new HalmaBoard(bsize, mode)
+gameBoard.initBoard()
+gameBoard.renderBoard()
 var actionBuffer = []
 var hopHistory = []
 var timer = new Timer(nextTurn, tlimit)

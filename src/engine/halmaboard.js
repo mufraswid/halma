@@ -30,6 +30,12 @@ class HalmaBoard {
 
         this.player1Pieces = []
         this.player2Pieces = []
+
+        // this.player1Color = localStorage.getItem('p1color')
+        // this.player2Color = localStorage.getItem('p2color')
+        /* testing purposes */
+        this.player1Color = 'red'
+        this.player2Color = 'green'
     }
 
     /**
@@ -63,6 +69,13 @@ class HalmaBoard {
             let x = i % 8
             let y = Math.floor(i/8)
             $('#cell' + i).html(this.board[x][y])
+            if(this.board[x][y] == this.player1) {
+                $('#cell' + i).css('background-color', this.player1Color)
+            } else if(this.board[x][y] == this.player2) {
+                $('#cell' + i).css('background-color', this.player2Color)
+            } else {
+                $('#cell' + i).css('background-color', 'white')
+            }
         }
     }
 

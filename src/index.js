@@ -1,4 +1,4 @@
-localStorage.mode("mode")
+localStorage.mode("mode", value)
 localStorage.tlimit("timeLimit", value)
 localStorage.bsize("boardSize", value)
 localStorage.p1color("p1color",value)

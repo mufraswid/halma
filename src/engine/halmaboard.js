@@ -7,7 +7,7 @@ class HalmaBoard {
      * @desc Konstuktor
      * @param {integer} size 
      */
-    constructor(size, mode) {
+    constructor(size, mode, repP1, repP2) {
         this.size = size;
         this.board = [];
 
@@ -30,6 +30,15 @@ class HalmaBoard {
 
         this.player1Pieces = []
         this.player2Pieces = []
+        // this.player1Color = localStorage.getItem('p1color')
+        // this.player2Color = localStorage.getItem('p2color')
+        /* testing purposes */
+        this.player1Color = 'red'
+        this.player2Color = 'green'
+
+        this.repP1 = repP1
+        this.repP2 = repP2
+        this.empty = '<div></div>'
     }
 
     /**
@@ -62,7 +71,16 @@ class HalmaBoard {
         for (var i = 0; i < this.size * this.size; i++) {
             let x = i % 8
             let y = Math.floor(i / 8)
-            $('#cell' + i).html(this.board[x][y])
+            if(this.board[x][y] == this.player1) {
+                $('#cell' + i).html(this.repP1)
+                $('#cell' + i).css('background-color', this.player1Color)
+            } else if(this.board[x][y] == this.player2) {
+                $('#cell' + i).html(this.repP2)
+                $('#cell' + i).css('background-color', this.player2Color)
+            } else {
+                $('#cell' + i).html(this.empty)
+                $('#cell' + i).css('background-color', 'white')
+            }
         }
     }
 

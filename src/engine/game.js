@@ -157,8 +157,12 @@ var mode = 'PC'
 var tlimit = 6000
 var bsize = 8
 
+/* Rep players here */
+var repP1 = '<div>P</div>'
+var repP2 = '<div>C</div>' 
+
 /* Init board components */
-var gameBoard = new HalmaBoard(bsize, mode)
+var gameBoard = new HalmaBoard(bsize, mode, repP1, repP2)
 gameBoard.initBoard()
 gameBoard.renderBoard()
 

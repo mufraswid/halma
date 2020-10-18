@@ -77,6 +77,25 @@ class HalmaBoard {
     }
 
     /**
+     * @desc Getter player pieces
+     */
+    getPlayerPieces(player) {
+        if (player == 1) {
+            return this.player1Pieces
+        }
+        else if (player == 2) {
+            return this.player2Pieces
+        }
+    }
+
+    /**
+     * @desc Getter size board
+     */
+    getSize() {
+        return this.size;
+    }
+
+    /**
      * @desc Update board papan setelah dilakukan aksi
      * @param {Action} action 
      */

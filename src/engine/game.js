@@ -157,13 +157,19 @@ var mode = 'PC'
 var tlimit = 6000
 var bsize = 8
 
-/* Inti components */
+/* Init board components */
 var gameBoard = new HalmaBoard(bsize, mode)
 gameBoard.initBoard()
 gameBoard.renderBoard()
+
+/* Init buffers and timer */
 var actionBuffer = []
 var hopHistory = []
 var timer = new Timer(nextTurn, tlimit)
+
+/* Init AI vars */
+var AI1 = null
+var AI2 = null
 
 /* Init game */
 initGame()

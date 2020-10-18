@@ -93,12 +93,16 @@ class HalmaBoard {
     }
 
     /**
-     * @desc Mengkopi state ke objek ini dan mengembalikan objek ini
-     * @param {array[array[]]} state 
+     * @desc Mengembalikan objek HalmaBoard lain yang sama dengan objek ini
      */
-    copyState(state) {
-        this.board = state
-        return this
+    copyCons() {
+        var cc = new HalmaBoard(this.size, this.mode)
+        cc.board = this.board
+        cc.player1 = this.player1
+        cc.player2 = this.player2
+        cc.player1Pieces = this.player1Pieces
+        cc.player2Pieces = this.player2Pieces
+        return cc
     }
 
     /**

@@ -78,6 +78,20 @@ class Action {
     }
 
     /**
+     * @desc Mengecek apakah langkah keluar dari rumah lawan atau tidak
+     * @param {HalmaBoard} board 
+     */
+    isExitingEnemyHome(board) {
+        var enemy = null
+        if(this.executor == board.getPlayer1()) {
+            enemy = board.getPlayer2()
+        } else {
+            enemy = board.getPlayer1()
+        }
+        return board.isOnHome(enemy, this.beforeCoord) && !board.isOnHome(enemy, this.afterCoord);
+    }
+
+    /**
      * @desc mengecek apakah aksi yang dilakukan pemain legal
      * @param {HalmaBoard} board 
      */

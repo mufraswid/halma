@@ -126,6 +126,20 @@ class HalmaBoard {
     }
 
     /**
+     * @desc Mengembalikan player 1
+     */
+    getPlayer1() {
+        return this.player1
+    }
+
+    /**
+     * @desc Mengembalikan player 2
+     */
+    getPlayer2() {
+        return this.player2
+    }
+
+    /**
      * @desc Mengembalikan objek HalmaBoard lain yang sama dengan objek ini
      */
     copyCons() {
@@ -188,10 +202,26 @@ class HalmaBoard {
      * @param {Coordinate} coord 
      */
     isOnHome(player, coord) {
+        var base = 5
+
+        if(this.size == 10) {
+            base = 6
+        } else if(this.size == 16) {
+            base = 7
+        }
+
         if (player == 'P' || player == 'K') {
-            return coord.getY() >= coord.getX() + this.size - 4
+            /* Corner case on the tip of the base */
+            if(coord.equal(new Coordinate(0, this.size - base)) || coord.equal(new Coordinate(base, 0))) {
+                return false
+            }
+            return coord.getY() >= coord.getX() + this.size - base
         } else {
-            return coord.getY() <= coord.getX() - this.size + 4
+            /* Corner case on the tip of the base */
+            if(coord.equal(new Coordinate(this.size - base, 0)) || coord.equal(new Coordinate(0, base))) {
+                return false
+            }
+            return coord.getY() <= coord.getX() - this.size + base
         }
     }
 }

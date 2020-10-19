@@ -44,7 +44,8 @@ function initListener() {
     $('#endTurn').on('click', () => {
         if (turn != 'P') {
             console.log("THIS IS NOT YOUR TURN!")
-            // Testing Purposes
+
+            // ! Testing Purposes
             // nextTurn()
         }
         else {
@@ -59,8 +60,8 @@ function initListener() {
  */
 function actionListener(ncell) {
     /* Convert to coords */
-    let x = ncell % 8
-    let y = Math.floor(ncell / 8)
+    let x = ncell % bsize
+    let y = Math.floor(ncell / bsize)
 
     console.log(x, y)
 
@@ -121,6 +122,11 @@ function nextTurn() {
 
     if (mode == 'PC' || mode == 'PCL') {
         turn = (turn == 'P') ? 'C' : 'P'
+        if (turn == 'C') {
+            $('#endTurn').attr('disabled', true)
+        } else {
+            $('#endTurn').attr('disabled', false)
+        }
 
     } else {
         turn = (turn == 'K') ? 'C' : 'K'
@@ -169,7 +175,6 @@ function initGame() {
 
     /* for testing purposes */
     initTurn()
-
 }
 
 /**
@@ -201,7 +206,7 @@ function renderTurn() {
 var bsize = localStorage.getItem('bsize')
 var mode = 'PC'
 var tlimit = 6000
-var bsize = 16
+var bsize = 8
 
 /* Test pass variable */
 console.log(localStorage.getItem('bsize'))

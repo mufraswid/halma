@@ -68,9 +68,6 @@ class HalmaBoard {
             return content;
         }(this.size))
 
-
-
-
         var offset = base
 
         for (var i = 0; i < base; i++) {
@@ -101,8 +98,8 @@ class HalmaBoard {
      */
     renderBoard() {
         for (var i = 0; i < this.size * this.size; i++) {
-            let x = i % 8
-            let y = Math.floor(i / 8)
+            let x = i % this.size
+            let y = Math.floor(i / this.size)
             if (this.board[x][y] == this.player1) {
                 $('#cell' + i).html(this.repP1)
                 // $('#cell' + i).css('background-color', this.player1Color)

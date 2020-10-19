@@ -9,7 +9,7 @@ class HalmaAI {
         this.opponent = opponent;
     }
 
-    getAllActions(coord, board) {
+    getAllActions(coord, board, player) {
     	var actions = [];
         var coords = [];
         var x = coord.getX();
@@ -23,7 +23,7 @@ class HalmaAI {
         coords.push(new Coordinate(x - 1, y + 1));
         coords.push(new Coordinate(x - 1, y - 1));
         for (i = 0; i < coords.length; i++) {
-            action = new Action(this.player, coord, coords[i])
+            action = new Action(player, coord, coords[i])
             if (action.isLegal(board)) {
                 actions.push(action)
             }
@@ -32,7 +32,7 @@ class HalmaAI {
     	return actions;
     }
 
-    getAllHops(coord, board, coordlist) {
+    getAllHops(coord, board, coordlist, player) {
         var coords = [];
         var final = [];
         var x = coord.getX();
@@ -46,7 +46,7 @@ class HalmaAI {
         coords.push(new Coordinate(x + 2, y - 2));
         coords.push(new Coordinate(x - 2, y - 2));
         for (i = 0; i < coords.length - 1; i++) {
-            act = new Action(this.player, coord, coords[i])
+            act = new Action(player, coord, coords[i])
             if (act.isLegal(board)) {
                 if (!coordlist.includes(coords[i])) {
                     coordlist.push(coords[i])
@@ -184,7 +184,7 @@ class HalmaAI {
         if (depth === 0 || state.isFinalState()) {
             return state.objFunc();
         }
-        let pieces = state.getPlayerPieces(this.player);
+        let pieces = state.getPlayerPieces(this.opponent);
         let chosen = pieces[Math.floor(Math.random()*pieces.length)];
         let actions = getAllActions(pieces[i]);
         let v = -Infinity;

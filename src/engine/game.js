@@ -4,7 +4,7 @@
  */
 function initAI() {
     if (mode == 'PC' || mode == 'CCL') {
-        /* MinMaxAI = new HalmaAI() */
+        AI1 = new HalmaAI(gameBoard, 2, 2, 1)
     } else if (mode == 'PCL' || mode == 'CCL') {
         /* MinMaxAILS = new HalmaAILS() */
     }
@@ -112,8 +112,6 @@ function nextTurn() {
     actionBuffer = []
     hopHistory = []
 
-
-
     if (gameBoard.isFinalState() > 0) {
         endGame(gameBoard.isFinalState())
         return
@@ -141,7 +139,11 @@ function nextTurn() {
     if (turn == 'K') {
         /* AI process */
     } else {
-        /* AI process */
+        AI1.setBoard(gameBoard)
+        var aiMove = AI1.getMove('minimax-only')
+        console.log(aiMove)
+        gameBoard.updateBoard(aiMove)
+        gameBoard.renderBoard()
     }
 }
 

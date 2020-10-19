@@ -22,7 +22,6 @@ class HalmaAI {
         coords.push(new Coordinate(x + 1, y - 1));
         coords.push(new Coordinate(x - 1, y + 1));
         coords.push(new Coordinate(x - 1, y - 1));
-        console.log(board)
         for (var i = 0; i < coords.length; i++) {
             var action = new Action(player, coord, coords[i])
             if (action.isLegal(board)) {
@@ -63,27 +62,27 @@ class HalmaAI {
 
     getMove(algorithm) {
         if (algorithm == 'minimax-only') {
-            return alphaBeta(this.maxDepth)
+            return this.alphaBeta(this.maxDepth)
         }
         else if (algorithm == 'minimax-localsearch') {
-            return localSearch(this.maxDepth)
+            return this.localSearch(this.maxDepth)
         }
     }
 
     alphaBeta(depth) {
-        let actions = []
-        let values = []
-        let pieces = state.getPlayerPieces(this.player);
-        for (i = 0; i < pieces.length; i++) {
-            actions = actions.concat(getAllActions(pieces[i], this.memoryBoard, this.player))
+        var actions = []
+        var values = []
+        var pieces = this.memoryBoard.getPlayerPieces(this.player);
+        for (var i = 0; i < pieces.length; i++) {
+            actions = actions.concat(this.getAllActions(pieces[i], this.memoryBoard, this.player))
         }
         var alpha = -Infinity;
         var beta = Infinity;
-        let v = -Infinity;
-        for (j = 0; j < actions.length; j++) {
+        var v = -Infinity;
+        for (var j = 0; j < actions.length; j++) {
             var update = state.copyCons()
             update.updateBoard(actions[j])
-            minval = minValue(update, alpha, beta, depth-1)
+            var minval = minValue(update, alpha, beta, depth-1)
             values.push(minval)
             v = Math.max(v, minval)
             if (v >= beta) {
@@ -100,12 +99,12 @@ class HalmaAI {
             return state.objFunc();
         }
         var actions = []
-        let pieces = state.getPlayerPieces(this.player);
-        for (i = 0; i < pieces.length; i++) {
-            actions = actions.concat(getAllActions(pieces[i], state, this.player))
+        var pieces = state.getPlayerPieces(this.player);
+        for (var i = 0; i < pieces.length; i++) {
+            actions = actions.concat(this.getAllActions(pieces[i], state, this.player))
         }
-        let v = -Infinity;
-        for (j = 0; j < actions.length; j++) {
+        var v = -Infinity;
+        for (var j = 0; j < actions.length; j++) {
             var update = state.copyCons()
             update.updateBoard(actions[j])
             v = Math.max(v, minValue(update, alpha, beta, depth-1))
@@ -121,12 +120,12 @@ class HalmaAI {
         if (depth === 0 || state.isFinalState()) {
             return state.objFunc();
         }
-        let pieces = state.getPlayerPieces(this.opponent);
-        for (i = 0; i < pieces.length; i++) {
+        var pieces = state.getPlayerPieces(this.opponent);
+        for (var i = 0; i < pieces.length; i++) {
             actions = actions.concat(getAllActions(pieces[i], state, this.opponent))
         }
-        let v = -Infinity;
-        for (j = 0; j < actions.length; j++) {
+        var v = -Infinity;
+        for (var j = 0; j < actions.length; j++) {
             update = state.copyCons()
             update.updateBoard(actions[j])
             v = Math.min(v, maxValue(update, alpha, beta, depth-1))
@@ -139,13 +138,13 @@ class HalmaAI {
     }
 
     localSearch(depth) {
-        let pieces = state.getPlayerPieces(this.player);
-        let chosen = pieces[Math.floor(Math.random()*pieces.length)];
-        let values = [];
-        let actions = getAllActions(chosen, this.memoryBoard, this.player);
+        var pieces = state.getPlayerPieces(this.player);
+        var chosen = pieces[Math.floor(Math.random()*pieces.length)];
+        var values = [];
+        var actions = getAllActions(chosen, this.memoryBoard, this.player);
         var alpha = -Infinity;
         var beta = Infinity;
-        let v = -Infinity;
+        var v = -Infinity;
         for (j = 0; j < actions.length; j++) {
             var update = state.copyCons()
             update.updateBoard(actions[j])
@@ -165,10 +164,10 @@ class HalmaAI {
         if (depth === 0 || state.isFinalState()) {
             return state.objFunc();
         }
-        let pieces = state.getPlayerPieces(this.player);
-        let chosen = pieces[Math.floor(Math.random()*pieces.length)];
-        let actions = getAllActions(chosen, state, this.player);
-        let v = -Infinity;
+        var pieces = state.getPlayerPieces(this.player);
+        var chosen = pieces[Math.floor(Math.random()*pieces.length)];
+        var actions = getAllActions(chosen, state, this.player);
+        var v = -Infinity;
         for (j = 0; j < actions.length; j++) {
             var update = state.copyCons()
             update.updateBoard(actions[j])
@@ -185,10 +184,10 @@ class HalmaAI {
         if (depth === 0 || state.isFinalState()) {
             return state.objFunc();
         }
-        let pieces = state.getPlayerPieces(this.opponent);
-        let chosen = pieces[Math.floor(Math.random()*pieces.length)];
-        let actions = getAllActions(chosen, state, this.opponent);
-        let v = -Infinity;
+        var pieces = state.getPlayerPieces(this.opponent);
+        var chosen = pieces[Math.floor(Math.random()*pieces.length)];
+        var actions = getAllActions(chosen, state, this.opponent);
+        var v = -Infinity;
         for (j = 0; j < actions.length; j++) {
             var update = state.copyCons()
             update.updateBoard(actions[j])
@@ -199,6 +198,10 @@ class HalmaAI {
             beta = Math.min(v, beta)
         }
         return v;
+    }
+
+    setBoard(board) {
+        this.memoryBoard = board
     }
 
 }

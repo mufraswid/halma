@@ -49,9 +49,23 @@ class HalmaBoard {
         let yHomePoint = this.size - 1
         let xEnemyPoint = this.size - 1
         let yEnemyPoint = 0
-        var offset = 4
+        var base = 4
 
-        for (var i = 0; i < 4; i++) {
+        if(this.size == 10) {
+            base = 5
+        } else if(this.size == 16) {
+            base = 6
+        }
+
+        var offset = base
+
+        for (var i = 0; i < base; i++) {
+            if(i > 0) {
+                this.board[xHomePoint + i][yHomePoint - offset] = this.player1
+                this.player1Pieces.push(new Coordinate(xHomePoint + i, yHomePoint - offset))
+                this.board[xEnemyPoint - i][yEnemyPoint + offset] = this.player2
+                this.player2Pieces.push(new Coordinate(xHomePoint - i, yHomePoint + offset))
+            }
             for (var j = 0; j < offset; j++) {
                 /* Render ke papan */
                 this.board[xHomePoint + i][yHomePoint - j] = this.player1
@@ -109,6 +123,20 @@ class HalmaBoard {
      */
     getSize() {
         return this.size;
+    }
+
+    /**
+     * @desc Mengembalikan player 1
+     */
+    getPlayer1() {
+        return this.player1
+    }
+
+    /**
+     * @desc Mengembalikan player 2
+     */
+    getPlayer2() {
+        return this.player2
     }
 
     /**
@@ -174,10 +202,26 @@ class HalmaBoard {
      * @param {Coordinate} coord 
      */
     isOnHome(player, coord) {
+        var base = 5
+
+        if(this.size == 10) {
+            base = 6
+        } else if(this.size == 16) {
+            base = 7
+        }
+
         if (player == 'P' || player == 'K') {
-            return coord.getY() >= coord.getX() + this.size - 4
+            /* Corner case on the tip of the base */
+            if(coord.equal(new Coordinate(0, this.size - base)) || coord.equal(new Coordinate(base, 0))) {
+                return false
+            }
+            return coord.getY() >= coord.getX() + this.size - base
         } else {
-            return coord.getY() <= coord.getX() - this.size + 4
+            /* Corner case on the tip of the base */
+            if(coord.equal(new Coordinate(this.size - base, 0)) || coord.equal(new Coordinate(0, base))) {
+                return false
+            }
+            return coord.getY() <= coord.getX() - this.size + base
         }
     }
 }

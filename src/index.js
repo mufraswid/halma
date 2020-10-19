@@ -35,4 +35,3 @@ function redirectAndStore() {
     /* redirect to board.html */
     window.location.href = "./board.html";
 }
-

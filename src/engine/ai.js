@@ -29,7 +29,7 @@ class HalmaAI {
             }
         }
         actions = actions.concat(getAllHops(coord, board, coords))
-    	return states;
+    	return actions;
     }
 
     getAllHops(coord, board, coordlist) {

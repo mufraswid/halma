@@ -32,7 +32,7 @@ class Coordinate {
      * @param {HalmaBoard} board 
      */
     isWithinBoard(board) {
-        return this.xcoord <= board.getSize() && this.xcoord <= board.getSize();
+        return this.xcoord <= board.getSize() && this.ycoord <= board.getSize();
     }
 
     /**

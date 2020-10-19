@@ -45,6 +45,9 @@ class HalmaAI {
         coords.push(new Coordinate(x - 2, y + 2));
         coords.push(new Coordinate(x + 2, y - 2));
         coords.push(new Coordinate(x - 2, y - 2));
+        if (coordlist.length > Math.pow(board.getSize(),2)) {
+            return final;
+        }
         for (var i = 0; i < coords.length - 1; i++) {
             var act = new Action(player, coord, coords[i])
             if (act.isLegal(board)) {

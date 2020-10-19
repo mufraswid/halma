@@ -74,7 +74,7 @@ class Action {
      * @param {HalmaBoard} board 
      */
     isGoBackHome(board) {
-        return !board.isOnHome(this.executor, this.beforeCoord) && board.isOnHome(this.executor, this.afterCoord)
+        return !board.isOnHome(this.executor, this.beforeCoord) && board.isOnHome(this.executor, this.afterCoord);
     }
 
     /**

@@ -80,7 +80,7 @@ class HalmaAI {
         var beta = Infinity;
         var v = -Infinity;
         for (var j = 0; j < actions.length; j++) {
-            var update = state.copyCons()
+            var update = this.memoryBoard.copyCons()
             update.updateBoard(actions[j])
             var minval = minValue(update, alpha, beta, depth-1)
             values.push(minval)
@@ -138,7 +138,7 @@ class HalmaAI {
     }
 
     localSearch(depth) {
-        var pieces = state.getPlayerPieces(this.player);
+        var pieces = this.memoryBoard.getPlayerPieces(this.player);
         var chosen = pieces[Math.floor(Math.random()*pieces.length)];
         var values = [];
         var actions = getAllActions(chosen, this.memoryBoard, this.player);
@@ -146,7 +146,7 @@ class HalmaAI {
         var beta = Infinity;
         var v = -Infinity;
         for (j = 0; j < actions.length; j++) {
-            var update = state.copyCons()
+            var update = this.memoryBoard.copyCons()
             update.updateBoard(actions[j])
             minval = minValueLS(update, alpha, beta, depth-1)
             values.push(minval)

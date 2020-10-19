@@ -28,7 +28,7 @@ class Action {
     getBeforeCoord() {
         return this.beforeCoord;
     }
-    
+
     /**
      * @desc Getter koordinat bidak setelah dipindahkan
      */
@@ -49,18 +49,18 @@ class Action {
         let xDiff = Math.abs(xAfter - xBefore)
         let yDiff = Math.abs(yAfter - yBefore)
 
-        if(xDiff > 2 || yDiff > 2 || xDiff === 1 || yDiff === 1 || (xDiff === 0 && yDiff === 0)) {
+        if (xDiff > 2 || yDiff > 2 || xDiff === 1 || yDiff === 1 || (xDiff === 0 && yDiff === 0)) {
             return false;
         }
 
         let xMod = 0;
         let yMod = 0;
-        if(xDiff === 0 && yDiff === 2) {
+        if (xDiff === 0 && yDiff === 2) {
             yMod = (yAfter > yBefore) ? 1 : -1;
 
         } else if (yDiff === 0 && xDiff === 2) {
             xMod = (xAfter > xBefore) ? 1 : -1;
-        
+
         } else { /* Diagonal Hopping */
             xMod = (xAfter > xBefore) ? 1 : -1;
             yMod = (yAfter > yBefore) ? 1 : -1;
@@ -94,12 +94,12 @@ class Action {
         let yBefore = this.beforeCoord.getY()
         let xAfter = this.afterCoord.getX()
         let yAfter = this.afterCoord.getY()
-        
+
         /* Legal conditions */
         let pieceIsExecutors = board.getBoard()[xBefore][yBefore] === this.executor;
         let afterIsEmpty = board.getBoard()[xAfter][yAfter] === '-';
         let moveOnProximity = Math.abs(xAfter - xBefore) === 1 || Math.abs(yAfter - yBefore) === 1;
 
-        return pieceIsExecutors && afterIsEmpty && isWithinBoard && (moveOnProximity || this.isHopping(board)) && !this.isGoBackHome(board);
+        return pieceIsExecutors && afterIsEmpty && this.isWithinBoard(board) && (moveOnProximity || this.isHopping(board)) && !this.isGoBackHome(board);
     }
 }

@@ -1,6 +1,8 @@
 tr > td {
-  height: 80px;
-  width: 80px;
+  max-height: 80px;
+  max-width: 80px;
+  min-height: 60px;
+  min-width: 60px;
 
   background-color: #e5f0ff;
   border-radius: 1rem;
@@ -14,7 +16,7 @@ tr > td {
 
 .board-table {
   border-collapse: separate;
-  border-spacing: 10px;
+  border-spacing: 8px;
   border: solid 10px #367be1;
   border-radius: 2rem;
   background-color: #f4f9ff;
@@ -26,4 +28,14 @@ tr > td {
 
 .p2 {
   background-color: #9ce4cf;
+}
+
+.emp {
+  height: 80px;
+  width: 80px;
+}
+
+.emp16 {
+  height: 60px;
+  width: 60px;
 }

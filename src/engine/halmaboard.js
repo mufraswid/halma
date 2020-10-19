@@ -7,7 +7,7 @@ class HalmaBoard {
      * @desc Konstuktor
      * @param {integer} size 
      */
-    constructor(size, mode, repP1, repP2) {
+    constructor(size, mode, repP1, repP2, empty) {
         this.size = size;
         this.board = [];
 
@@ -38,7 +38,7 @@ class HalmaBoard {
 
         this.repP1 = repP1
         this.repP2 = repP2
-        this.empty = '<div></div>'
+        this.empty = empty
     }
 
     /**
@@ -50,6 +50,24 @@ class HalmaBoard {
         let xEnemyPoint = this.size - 1
         let yEnemyPoint = 0
         var offset = 4
+
+        $('#board').html(function (size) {
+            let cellid = 0;
+            let content = "";
+            for (let i = 0; i < size; i++) {
+                content = content.concat("<tr>");
+                for (let j = 0; j < size; j++) {
+                    content = content.concat("<td id=\"cell");
+                    content = content.concat(cellid);
+                    // if content.concat()
+                    content = content.concat("\"> </td>");
+                    cellid += 1;
+                }
+                content = content.concat("</tr>");
+            }
+            return content;
+        }(this.size))
+
 
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < offset; j++) {

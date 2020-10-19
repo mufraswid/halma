@@ -201,7 +201,7 @@ function renderTurn() {
 var bsize = localStorage.getItem('bsize')
 var mode = 'PC'
 var tlimit = 6000
-var bsize = 8
+var bsize = 16
 
 /* Test pass variable */
 console.log(localStorage.getItem('bsize'))

@@ -49,7 +49,7 @@ class HalmaBoard {
         let yHomePoint = this.size - 1
         let xEnemyPoint = this.size - 1
         let yEnemyPoint = 0
-        var base = 4
+        var base = (this.size >= 10) ? 5 : 4;
 
         $('#board').html(function (size) {
             let cellid = 0;
@@ -69,23 +69,18 @@ class HalmaBoard {
         }(this.size))
 
 
-        if (this.size == 10) {
-            base = 5
-        } else if (this.size == 16) {
-            base = 6
-        }
+
 
         var offset = base
 
         for (var i = 0; i < base; i++) {
-            if (i > 0) {
+            if (i > 0 && this.size == 16) {
                 this.board[xHomePoint + i][yHomePoint - offset] = this.player1
                 this.player1Pieces.push(new Coordinate(xHomePoint + i, yHomePoint - offset))
                 $('#cell' + this.getIdfromCoor(xHomePoint + i, yHomePoint - offset)).toggleClass("p1");
                 this.board[xEnemyPoint - i][yEnemyPoint + offset] = this.player2
-                this.player2Pieces.push(new Coordinate(xHomePoint - i, yHomePoint + offset))
+                this.player2Pieces.push(new Coordinate(xEnemyPoint - i, yEnemyPoint + offset))
                 $('#cell' + this.getIdfromCoor(xEnemyPoint - i, yEnemyPoint + offset)).toggleClass("p2");
-                console.log(this.getIdfromCoor(xEnemyPoint - i, yEnemyPoint + offset));
             }
             for (var j = 0; j < offset; j++) {
                 /* Render ke papan */

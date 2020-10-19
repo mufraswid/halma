@@ -9,10 +9,10 @@ class HalmaAI {
     }
 
     getAllStates(coord, board) {
-    	var states = []
-        var coord = []
-        var x = coord.getX()
-        var y = coord.getY()
+    	var states = [];
+        var coord = [];
+        var x = coord.getX();
+        var y = coord.getY();
         coord.push(new Coordinate(x, y + 1));
         coord.push(new Coordinate(x, y - 1));
         coord.push(new Coordinate(x + 1, y));
@@ -32,8 +32,10 @@ class HalmaAI {
     }
 
     getAllHops(coord, board, coordlist) {
-        var coords = []
-        var final = []
+        var coords = [];
+        var final = [];
+        var x = coord.getX();
+        var y = coord.getY();
         coords.push(new Coordinate(x, y + 2));
         coords.push(new Coordinate(x, y - 2));
         coords.push(new Coordinate(x + 2, y));
@@ -56,7 +58,7 @@ class HalmaAI {
         return final;
     }
 
-    /*getMove(algorithm) {
+    getMove(algorithm) {
     	var pieces = this.memoryBoard.getPlayerPieces(player);
     	var states = []
         for (i = 0; i < pieces.length; i++) {
@@ -73,4 +75,4 @@ class HalmaAI {
             localsearch(states, utilities, this.maxDepth)
         }
     }
-}*/
+}

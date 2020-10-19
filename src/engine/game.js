@@ -83,7 +83,7 @@ function actionListener(ncell) {
 
         if (hopHistory.length > 0) {
             /* Kalau yang dijalankan bukan bidak sebelumnya, NOT LEGAL */
-            if (!hopHistory[hopHistory.length - 1].equal(act.getBeforeCoord())) {
+            if (!hopHistory[hopHistory.length - 1].equal(act.getBeforeCoord()) || !act.isHopping(gameBoard)) {
                 console.log('NOT LEGAL')
                 return
             }
@@ -199,7 +199,7 @@ function renderTurn() {
 var bsize = localStorage.getItem('bsize')
 var mode = 'PC'
 var tlimit = 6000
-// var bsize = 8
+var bsize = 8
 
 /* Test pass variable */
 console.log(localStorage.getItem('bsize'))

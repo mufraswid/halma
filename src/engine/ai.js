@@ -171,7 +171,7 @@ class HalmaAI {
         for (j = 0; j < actions.length; j++) {
             update = state.copyCons()
             update.updateBoard(actions[j])
-            v = Math.max(v, minValue(update, alpha, beta, depth-1))
+            v = Math.max(v, minValueLS(update, alpha, beta, depth-1))
             if (v >= beta) {
                 return v;
             }
@@ -191,7 +191,7 @@ class HalmaAI {
         for (j = 0; j < actions.length; j++) {
             update = state.copyCons()
             update.updateBoard(actions[j])
-            v = Math.min(v, maxValue(update, alpha, beta, depth-1))
+            v = Math.min(v, maxValueLS(update, alpha, beta, depth-1))
             if (v <= alpha) {
                 return v;
             }

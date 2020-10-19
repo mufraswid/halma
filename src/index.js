@@ -22,14 +22,14 @@ function redirectAndStore() {
 
     localStorage.setItem('bsize', bsize)
     localStorage.setItem('p1color', p1color)
-    localStorage.setItem('p2color', p2color)
+    // localStorage.setItem('p2color', p2color)
     localStorage.setItem('mode', mode)
     localStorage.setItem('tlimit', tlimit)
 
     /* for testing only */
     console.log(localStorage.getItem('bsize'))
     console.log(localStorage.getItem('p1color'))
-    console.log(localStorage.getItem('p2color'))
+    // console.log(localStorage.getItem('p2color'))
     console.log(localStorage.getItem('mode'))
     console.log(localStorage.getItem('tlimit'))
 

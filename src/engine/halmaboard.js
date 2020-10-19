@@ -49,9 +49,23 @@ class HalmaBoard {
         let yHomePoint = this.size - 1
         let xEnemyPoint = this.size - 1
         let yEnemyPoint = 0
-        var offset = 4
+        var base = 4
 
-        for (var i = 0; i < 4; i++) {
+        if(this.size == 10) {
+            base = 5
+        } else if(this.size == 16) {
+            base = 6
+        }
+
+        var offset = base
+
+        for (var i = 0; i < base; i++) {
+            if(i > 0) {
+                this.board[xHomePoint + i][yHomePoint - offset] = this.player1
+                this.player1Pieces.push(new Coordinate(xHomePoint + i, yHomePoint - offset))
+                this.board[xEnemyPoint - i][yEnemyPoint + offset] = this.player2
+                this.player2Pieces.push(new Coordinate(xHomePoint - i, yHomePoint + offset))
+            }
             for (var j = 0; j < offset; j++) {
                 /* Render ke papan */
                 this.board[xHomePoint + i][yHomePoint - j] = this.player1

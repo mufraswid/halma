@@ -82,6 +82,12 @@ class Action {
      * @param {HalmaBoard} board 
      */
     isLegal(board) {
+
+        if(!this.beforeCoord.isWithinBoard(board) || !this.afterCoord.isWithinBoard(board)) {
+            console.log("ILLEGAL")
+            return false
+        }
+
         let xBefore = this.beforeCoord.getX()
         let yBefore = this.beforeCoord.getY()
         let xAfter = this.afterCoord.getX()
@@ -90,8 +96,8 @@ class Action {
         /* Legal conditions */
         let pieceIsExecutors = board.getBoard()[xBefore][yBefore] === this.executor;
         let afterIsEmpty = board.getBoard()[xAfter][yAfter] === '-';
-        let moveOnProximity = Math.abs(xAfter - xBefore) === 1 || Math.abs(yAfter - yBefore) === 1;
+        let moveOnProximity = Math.abs(xAfter - xBefore) <= 1 && Math.abs(yAfter - yBefore) <= 1;
 
-        return pieceIsExecutors && afterIsEmpty && this.beforeCoord.isWithinBoard(board) && this.afterCoord.isWithinBoard(board) && (moveOnProximity || this.isHopping(board)) && !this.isGoBackHome(board);
+        return pieceIsExecutors && afterIsEmpty && (moveOnProximity || this.isHopping(board)) && !this.isGoBackHome(board);
     }
 }

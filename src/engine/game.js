@@ -81,7 +81,7 @@ function actionListener(ncell) {
 
         if (hopHistory.length > 0) {
             /* Kalau yang dijalankan bukan bidak sebelumnya, NOT LEGAL */
-            if (!hopHistory[hopHistory.length - 1].equal(act.getBeforeCoord())) {
+            if (!hopHistory[hopHistory.length - 1].equal(act.getBeforeCoord()) || !act.isHopping(gameBoard)) {
                 console.log('NOT LEGAL')
                 return
             }

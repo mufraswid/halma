@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
@@ -99,6 +99,47 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="option-submenu">
+                            <h2 class="option-subtitle">Mode</h2>
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       name="mode"
+                                       type="radio"
+                                       id="mode1"
+                                       value="1" />
+                                <label class="form-check-label" for="mode1"> Player v. AI Minimax </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       name="mode"
+                                       type="radio"
+                                       id="mode2"
+                                       value="2" />
+                                <label class="form-check-label" for="mode2"> Player v. AI Minimax Local Search </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       name="mode"
+                                       type="radio"
+                                       id="mode3"
+                                       value="3" />
+                                <label class="form-check-label" for="mode3"> AI Minimax v. AI Minimax Local Search </label>
+                            </div>
+                        </div>
+
+                        <div class="option-submenu">
+                            <h2 class="option-subtitle">Time</h2>
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       name="time"
+                                       type="text"
+                                       id="tlimit"
+                                       value="" />
+                                <label class="form-check-label" for="tlimit"> Time </label>
+                            </div>
+                        </div>
+
                     </div>
                 </form>
                 <button onclick="redirectAndStore()" class="btn btn-primary submit">

@@ -136,10 +136,10 @@ class HalmaBoard {
      * @desc Getter player pieces
      */
     getPlayerPieces(player) {
-        if (player == 1) {
+        if (player == 'P' || player == 'K') {
             return this.player1Pieces
         }
-        else if (player == 2) {
+        else if (player == 'C') {
             return this.player2Pieces
         }
     }

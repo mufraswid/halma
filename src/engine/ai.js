@@ -3,7 +3,7 @@
  */
 class HalmaAI {
     constructor(board, maxDepth, player, opponent) {
-        this.memoryBoard = board;
+        this.memoryBoard = board.copyCons()
         this.maxDepth = maxDepth;
         this.player = player;
         this.opponent = opponent;
@@ -94,12 +94,13 @@ class HalmaAI {
             alpha = Math.max(v, alpha)
         }
         var indexmax = values.indexOf(v)
+        console.log(indexmax)
         return actions[indexmax];
     }
 
     maxValue(state, alpha, beta, depth) {
         if (depth === 0 || state.isFinalState()) {
-            return state.objFunc();
+            return state.objFunc(this.player);
         }
         var actions = []
         var pieces = state.getPlayerPieces(this.player);
@@ -121,15 +122,16 @@ class HalmaAI {
 
     minValue(state, alpha, beta, depth) {
         if (depth === 0 || state.isFinalState()) {
-            return state.objFunc();
+            return state.objFunc(this.player);
         }
         var pieces = state.getPlayerPieces(this.opponent);
+        var actions = []
         for (var i = 0; i < pieces.length; i++) {
             actions = actions.concat(this.getAllActions(pieces[i], state, this.opponent))
         }
-        var v = -Infinity;
+        var v = Infinity;
         for (var j = 0; j < actions.length; j++) {
-            update = state.copyCons()
+            var update = state.copyCons()
             update.updateBoard(actions[j])
             v = Math.min(v, this.maxValue(update, alpha, beta, depth-1))
             if (v <= alpha) {
@@ -165,7 +167,7 @@ class HalmaAI {
 
     maxValueLS(state, alpha, beta, depth) {
         if (depth === 0 || state.isFinalState()) {
-            return state.objFunc();
+            return state.objFunc(this.player);
         }
         var pieces = state.getPlayerPieces(this.player);
         var chosen = pieces[Math.floor(Math.random()*pieces.length)];
@@ -185,7 +187,7 @@ class HalmaAI {
 
     minValueLS(state, alpha, beta, depth) {
         if (depth === 0 || state.isFinalState()) {
-            return state.objFunc();
+            return state.objFunc(this.player);
         }
         var pieces = state.getPlayerPieces(this.opponent);
         var chosen = pieces[Math.floor(Math.random()*pieces.length)];

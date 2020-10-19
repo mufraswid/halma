@@ -4,7 +4,7 @@
  */
 function initAI() {
     if (mode == 'PC' || mode == 'CCL') {
-        AI1 = new HalmaAI(gameBoard, 2, 'C', 'P')
+        AI1 = new HalmaAI(gameBoard, 1, 'C', 'P')
     } else if (mode == 'PCL' || mode == 'CCL') {
         /* MinMaxAILS = new HalmaAILS() */
     }
@@ -143,9 +143,9 @@ function nextTurn() {
     } else {
         AI1.setBoard(gameBoard)
         var aiMove = AI1.getMove('minimax-only')
-        console.log(aiMove)
         gameBoard.updateBoard(aiMove)
         gameBoard.renderBoard()
+        return
     }
 }
 
@@ -201,7 +201,7 @@ function renderTurn() {
 var bsize = localStorage.getItem('bsize')
 var mode = 'PC'
 var tlimit = 6000
-var bsize = 16
+var bsize = 8
 
 /* Test pass variable */
 console.log(localStorage.getItem('bsize'))

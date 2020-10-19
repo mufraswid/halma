@@ -169,8 +169,18 @@ class HalmaBoard {
      * @desc Mengembalikan objek HalmaBoard lain yang sama dengan objek ini
      */
     copyCons() {
-        var cc = new HalmaBoard(this.size, this.mode)
-        cc.board = this.board
+        var cc = new HalmaBoard(this.size, this.mode, this.repP1, this.repP2, this.empty)
+        cc.board = []
+
+        var innerRow
+        for (var i = 0; i < this.size; i++) {
+            innerRow = []
+            for (var j = 0; j < this.size; j++) {
+                innerRow.push(this.getBoard()[i][j]);
+            }
+            cc.board.push(innerRow);
+        }
+
         cc.player1 = this.player1
         cc.player2 = this.player2
         cc.player1Pieces = this.player1Pieces
@@ -193,8 +203,20 @@ class HalmaBoard {
         this.board[xAfter][yAfter] = player;
     }
 
-    objFunc() {
+    objFunc(player) {
         /* Fungsi objektif */
+        var xEnemyBase = (player == this.player1) ? this.size - 1 : 0
+        var yEnemyBase = (player == this.player1) ? 0 : this.size - 1
+        var playerPieces = (player == this.player1) ? this.player1Pieces : this.player2Pieces
+        var enemyPieces = (player == this.player1) ? this.player2Pieces : this.player1Pieces
+
+        var sum = 0
+        for(var i = 0; i < playerPieces.length; i++) {
+            sum += Math.abs(playerPieces[i].getX() - xEnemyBase) + Math.abs(playerPieces[i].getY() - yEnemyBase)
+            sum -= Math.abs(enemyPieces[i].getX() - xEnemyBase) + Math.abs(enemyPieces[i].getY() - yEnemyBase)
+        }
+
+        return sum
     }
 
     /**

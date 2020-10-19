@@ -2,7 +2,7 @@ function Timer(fn, t) {
     var timerObj = setInterval(fn, t);
 
     /* Stop timer */
-    this.stop = function() {
+    this.stop = function () {
         if (timerObj) {
             clearInterval(timerObj);
             timerObj = null;
@@ -11,7 +11,7 @@ function Timer(fn, t) {
     }
 
     /* Start timer */
-    this.start = function() {
+    this.start = function () {
         if (!timerObj) {
             this.stop();
             timerObj = setInterval(fn, t);
@@ -20,7 +20,7 @@ function Timer(fn, t) {
     }
 
     /* Reset timer */
-    this.reset = function(newT = t) {
+    this.reset = function (newT = t) {
         t = newT;
         return this.stop().start();
     }

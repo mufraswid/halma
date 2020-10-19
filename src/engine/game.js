@@ -3,9 +3,9 @@
  * @desc Inisialisasi AI yang bermain
  */
 function initAI() {
-    if(mode == 'PC' || mode == 'CCL') {
+    if (mode == 'PC' || mode == 'CCL') {
         /* MinMaxAI = new HalmaAI() */
-    } else if(mode == 'PCL' || mode == 'CCL') {
+    } else if (mode == 'PCL' || mode == 'CCL') {
         /* MinMaxAILS = new HalmaAILS() */
     }
 }
@@ -14,7 +14,7 @@ function initAI() {
  * @desc Memulai permainan dengan menentukan giliran dan start timer: aktif saat tekan 'START GAME'
  */
 function initTurn() {
-    if(mode == 'PC' || mode == 'PCL') {
+    if (mode == 'PC' || mode == 'PCL') {
         turn = 'P'
     } else {
         turn = 'K'
@@ -23,6 +23,7 @@ function initTurn() {
     /* start timer */
     timer.start()
     alert("Time started!")
+    renderTurn()
 }
 
 /**
@@ -30,15 +31,24 @@ function initTurn() {
  */
 function initListener() {
     var arr = []
-    for(var i = 0; i < bsize*bsize; i++) {
+    for (var i = 0; i < bsize * bsize; i++) {
         arr.push(i)
     }
 
     function listen(item, _) {
         $('#cell' + item).on('click', () => actionListener(item))
+
     }
 
     arr.forEach(listen)
+    $('#endTurn').on('click', () => {
+        if (turn != 'P') {
+            console.log("THIS IS NOT YOUR TURN!")
+        }
+        else {
+            nextTurn()
+        }
+    })
 }
 
 /**
@@ -48,42 +58,42 @@ function initListener() {
 function actionListener(ncell) {
     /* Convert to coords */
     let x = ncell % 8
-    let y = Math.floor(ncell/8)
+    let y = Math.floor(ncell / 8)
 
     console.log(x, y)
 
     /* Block if not player turn */
-    if(turn != 'P') {
+    if (turn != 'P') {
         console.log("THIS IS NOT YOUR TURN!")
         return
     }
 
     let step = new Coordinate(x, y)
     actionBuffer.push(step)
-    if(actionBuffer.length == 2) {
+    if (actionBuffer.length == 2) {
         let act = new Action(turn, actionBuffer[0], actionBuffer[1])
 
         actionBuffer = []
-        if(!act.isLegal(gameBoard)) {
+        if (!act.isLegal(gameBoard)) {
             console.log("NOT LEGAL")
             return
         }
 
-        if(hopHistory.length > 0) {
+        if (hopHistory.length > 0) {
             /* Kalau yang dijalankan bukan bidak sebelumnya, NOT LEGAL */
-            if(!hopHistory[hopHistory.length - 1].equal(act.getBeforeCoord())) {
+            if (!hopHistory[hopHistory.length - 1].equal(act.getBeforeCoord())) {
                 console.log('NOT LEGAL')
                 return
             }
         }
-        
+
         /* Update board */
         gameBoard.updateBoard(act)
         /* Render board */
         gameBoard.renderBoard()
-        
+
         /* If not hopping, proceed to next turn */
-        if(!act.isHopping(gameBoard)) {
+        if (!act.isHopping(gameBoard)) {
             nextTurn()
         } else { /* If hopping, push to history to compare to next hop */
             hopHistory.push(act.getAfterCoord())
@@ -96,31 +106,39 @@ function actionListener(ncell) {
  */
 function nextTurn() {
     /* Stop timer, bersihkan actionBuffer */
+    counter.stop()
     timer.stop()
+    sec = tlimit
     actionBuffer = []
     hopHistory = []
 
-    if(gameBoard.isFinalState() > 0) {
+
+
+    if (gameBoard.isFinalState() > 0) {
         endGame(gameBoard.isFinalState())
         return
     }
 
-    if(mode == 'PC' || mode == 'PCL') {
+    if (mode == 'PC' || mode == 'PCL') {
         turn = (turn == 'P') ? 'C' : 'P'
+
     } else {
         turn = (turn == 'K') ? 'C' : 'K'
     }
 
+    renderTurn()
+
     console.log('NEXT TURN:' + turn)
 
     /* Start timer again */
+    counter.start()
     timer.start()
 
     /* Return if player turn */
-    if(turn == 'P') return
+    if (turn == 'P') return
 
     /* AI move */
-    if(turn == 'K') {
+    if (turn == 'K') {
         /* AI process */
     } else {
         /* AI process */
@@ -133,7 +151,7 @@ function nextTurn() {
  */
 function endGame(winner) {
     timer.stop()
-    alert("Pemenangnya adalah Player" + winner +"!")
+    alert("Pemenangnya adalah Player" + winner + "!")
 }
 
 /**
@@ -141,13 +159,37 @@ function endGame(winner) {
  */
 function initGame() {
     initAI()
-    if(mode == 'PC' || mode == 'PCL') {
+    if (mode == 'PC' || mode == 'PCL') {
         initListener()
     }
 
     /* for testing purposes */
     initTurn()
+
 }
+
+/**
+ * @desc Render timer ke papan
+ */
+function renderTimer() {
+    sec -= 100
+    var out = sec / 1000
+    $('#timeDisplay').html(out.toFixed(1))
+}
+/**
+ * @desc Render turn ke papan
+ */
+function renderTurn() {
+    var disp = ""
+    if (mode == 'PC' || mode == 'PCL') {
+        disp = (turn == 'P') ? 'Player' : 'Computer'
+
+    } else {
+        disp = (turn == 'C') ? 'Minimax' : 'Local Search'
+    }
+    $('#turnDisplay').html(disp)
+}
+
 
 /* Get param */
 // var mode = localStorage.getItem('mode')
@@ -163,8 +205,8 @@ console.log(localStorage.getItem('p1color'))
 console.log(localStorage.getItem('p1color'))
 
 /* Rep players here */
-var repP1 = '<div>P</div>'
-var repP2 = '<div>C</div>' 
+var repP1 = '<div ><svg width="80" height="80"><circle cx="40" cy="40" r="30" stroke="rgb(240,74,74)" stroke-width="8" fill="rgb(193,32,32)" /></svg></div>'
+var repP2 = '<div ><svg width="80" height="80"><circle cx="40" cy="40" r="30" stroke="rgb(30,185,92)" stroke-width="8" fill="rgb(23,154,60)" /></svg></div>'
 
 /* Init board components */
 var gameBoard = new HalmaBoard(bsize, mode, repP1, repP2)
@@ -174,6 +216,9 @@ gameBoard.renderBoard()
 /* Init buffers and timer */
 var actionBuffer = []
 var hopHistory = []
+var sec = tlimit;
+var counter = new Timer(renderTimer, 100);
+// counter.start();
 var timer = new Timer(nextTurn, tlimit)
 
 /* Init AI vars */

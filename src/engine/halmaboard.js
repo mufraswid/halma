@@ -71,18 +71,19 @@ class HalmaBoard {
         for (var i = 0; i < this.size * this.size; i++) {
             let x = i % 8
             let y = Math.floor(i / 8)
-            if(this.board[x][y] == this.player1) {
+            if (this.board[x][y] == this.player1) {
                 $('#cell' + i).html(this.repP1)
-                $('#cell' + i).css('background-color', this.player1Color)
-            } else if(this.board[x][y] == this.player2) {
+                // $('#cell' + i).css('background-color', this.player1Color)
+            } else if (this.board[x][y] == this.player2) {
                 $('#cell' + i).html(this.repP2)
-                $('#cell' + i).css('background-color', this.player2Color)
+                // $('#cell' + i).css('background-color', this.player2Color)
             } else {
                 $('#cell' + i).html(this.empty)
-                $('#cell' + i).css('background-color', 'white')
+                // $('#cell' + i).css('background-color', 'white')
             }
         }
     }
+
 
     /**
      * @desc Getter state papan

@@ -157,6 +157,11 @@ var mode = 'PC'
 var tlimit = 6000
 var bsize = 8
 
+/* Test pass variable */
+console.log(localStorage.getItem('bsize'))
+console.log(localStorage.getItem('p1color'))
+console.log(localStorage.getItem('p1color'))
+
 /* Rep players here */
 var repP1 = '<div>P</div>'
 var repP2 = '<div>C</div>' 

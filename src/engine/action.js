@@ -78,14 +78,6 @@ class Action {
     }
 
     /**
-     * @desc Mengecek apakah langkah melampaui ukuran board atau tidak
-     * @param {HalmaBoard} board 
-     */
-    isWithinBoard(board) {
-        return this.afterCoord.getX() <= board.getSize() && this.afterCoord.getY() <= board.getSize();
-    }
-
-    /**
      * @desc mengecek apakah aksi yang dilakukan pemain legal
      * @param {HalmaBoard} board 
      */
@@ -100,6 +92,6 @@ class Action {
         let afterIsEmpty = board.getBoard()[xAfter][yAfter] === '-';
         let moveOnProximity = Math.abs(xAfter - xBefore) === 1 || Math.abs(yAfter - yBefore) === 1;
 
-        return pieceIsExecutors && afterIsEmpty && isWithinBoard && (moveOnProximity || this.isHopping(board)) && !this.isGoBackHome(board);
+        return pieceIsExecutors && afterIsEmpty && this.beforeCoord.isWithinBoard(board) && this.afterCoord.isWithinBoard(board) && (moveOnProximity || this.isHopping(board)) && !this.isGoBackHome(board);
     }
 }

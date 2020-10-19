@@ -28,6 +28,14 @@ class Coordinate {
     }
 
     /**
+     * @desc Mengecek apakah langkah melampaui ukuran board atau tidak
+     * @param {HalmaBoard} board 
+     */
+    isWithinBoard(board) {
+        return this.xcoord <= board.getSize() && this.xcoord <= board.getSize();
+    }
+
+    /**
      * @desc Operator equal
      * @param {Coordinate} other
      */

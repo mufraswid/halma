@@ -45,6 +45,9 @@ class HalmaAI {
         coords.push(new Coordinate(x - 2, y + 2));
         coords.push(new Coordinate(x + 2, y - 2));
         coords.push(new Coordinate(x - 2, y - 2));
+        if (coordlist.length > Math.pow(board.getSize(),2)) {
+            return final;
+        }
         for (var i = 0; i < coords.length - 1; i++) {
             var act = new Action(player, coord, coords[i])
             if (act.isLegal(board)) {
@@ -82,7 +85,7 @@ class HalmaAI {
         for (var j = 0; j < actions.length; j++) {
             var update = this.memoryBoard.copyCons()
             update.updateBoard(actions[j])
-            var minval = minValue(update, alpha, beta, depth-1)
+            var minval = this.minValue(update, alpha, beta, depth-1)
             values.push(minval)
             v = Math.max(v, minval)
             if (v >= beta) {
@@ -107,7 +110,7 @@ class HalmaAI {
         for (var j = 0; j < actions.length; j++) {
             var update = state.copyCons()
             update.updateBoard(actions[j])
-            v = Math.max(v, minValue(update, alpha, beta, depth-1))
+            v = Math.max(v, this.minValue(update, alpha, beta, depth-1))
             if (v >= beta) {
                 return v;
             }
@@ -122,13 +125,13 @@ class HalmaAI {
         }
         var pieces = state.getPlayerPieces(this.opponent);
         for (var i = 0; i < pieces.length; i++) {
-            actions = actions.concat(getAllActions(pieces[i], state, this.opponent))
+            actions = actions.concat(this.getAllActions(pieces[i], state, this.opponent))
         }
         var v = -Infinity;
         for (var j = 0; j < actions.length; j++) {
             update = state.copyCons()
             update.updateBoard(actions[j])
-            v = Math.min(v, maxValue(update, alpha, beta, depth-1))
+            v = Math.min(v, this.maxValue(update, alpha, beta, depth-1))
             if (v <= alpha) {
                 return v;
             }
@@ -141,14 +144,14 @@ class HalmaAI {
         var pieces = this.memoryBoard.getPlayerPieces(this.player);
         var chosen = pieces[Math.floor(Math.random()*pieces.length)];
         var values = [];
-        var actions = getAllActions(chosen, this.memoryBoard, this.player);
+        var actions = this.getAllActions(chosen, this.memoryBoard, this.player);
         var alpha = -Infinity;
         var beta = Infinity;
         var v = -Infinity;
         for (j = 0; j < actions.length; j++) {
             var update = this.memoryBoard.copyCons()
             update.updateBoard(actions[j])
-            minval = minValueLS(update, alpha, beta, depth-1)
+            minval = this.minValueLS(update, alpha, beta, depth-1)
             values.push(minval)
             v = Math.max(v, minval)
             if (v >= beta) {
@@ -166,12 +169,12 @@ class HalmaAI {
         }
         var pieces = state.getPlayerPieces(this.player);
         var chosen = pieces[Math.floor(Math.random()*pieces.length)];
-        var actions = getAllActions(chosen, state, this.player);
+        var actions = this.getAllActions(chosen, state, this.player);
         var v = -Infinity;
         for (j = 0; j < actions.length; j++) {
             var update = state.copyCons()
             update.updateBoard(actions[j])
-            v = Math.max(v, minValueLS(update, alpha, beta, depth-1))
+            v = Math.max(v, this.minValueLS(update, alpha, beta, depth-1))
             if (v >= beta) {
                 return v;
             }
@@ -186,12 +189,12 @@ class HalmaAI {
         }
         var pieces = state.getPlayerPieces(this.opponent);
         var chosen = pieces[Math.floor(Math.random()*pieces.length)];
-        var actions = getAllActions(chosen, state, this.opponent);
+        var actions = this.getAllActions(chosen, state, this.opponent);
         var v = -Infinity;
         for (j = 0; j < actions.length; j++) {
             var update = state.copyCons()
             update.updateBoard(actions[j])
-            v = Math.min(v, maxValueLS(update, alpha, beta, depth-1))
+            v = Math.min(v, this.maxValueLS(update, alpha, beta, depth-1))
             if (v <= alpha) {
                 return v;
             }

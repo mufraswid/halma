@@ -4,7 +4,7 @@
  */
 function initAI() {
     if (mode == 'PC' || mode == 'CCL') {
-        AI1 = new HalmaAI(gameBoard, 2, 2, 1)
+        AI1 = new HalmaAI(gameBoard, 2, 'C', 'P')
     } else if (mode == 'PCL' || mode == 'CCL') {
         /* MinMaxAILS = new HalmaAILS() */
     }

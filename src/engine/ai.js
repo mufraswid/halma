@@ -28,7 +28,7 @@ class HalmaAI {
                 actions.push(action)
             }
         }
-        actions = actions.concat(getAllHops(coord, board, coords))
+        actions = actions.concat(getAllHops(coord, board, coords, player))
     	return actions;
     }
 
@@ -53,7 +53,7 @@ class HalmaAI {
                     update = board.copyCons()
                     update.updateBoard(action)
                     final.push(act)
-                    final = final.concat(getAllHops(coords[i], update, coordlist))
+                    final = final.concat(getAllHops(coords[i], update, coordlist, player))
                 }
             }
         }
@@ -74,7 +74,7 @@ class HalmaAI {
         let values = []
         let pieces = state.getPlayerPieces(this.player);
         for (i = 0; i < pieces.length; i++) {
-            actions = actions.concat(getAllActions(pieces[i]))
+            actions = actions.concat(getAllActions(pieces[i], this.memoryBoard, this.player))
         }
         var alpha = -Infinity;
         var beta = Infinity;
@@ -101,7 +101,7 @@ class HalmaAI {
         var actions = []
         let pieces = state.getPlayerPieces(this.player);
         for (i = 0; i < pieces.length; i++) {
-            actions = actions.concat(getAllActions(pieces[i]))
+            actions = actions.concat(getAllActions(pieces[i], state, this.player))
         }
         let v = -Infinity;
         for (j = 0; j < actions.length; j++) {
@@ -122,7 +122,7 @@ class HalmaAI {
         }
         let pieces = state.getPlayerPieces(this.opponent);
         for (i = 0; i < pieces.length; i++) {
-            actions = actions.concat(getAllActions(pieces[i]))
+            actions = actions.concat(getAllActions(pieces[i], state, this.opponent))
         }
         let v = -Infinity;
         for (j = 0; j < actions.length; j++) {
@@ -141,7 +141,7 @@ class HalmaAI {
         let pieces = state.getPlayerPieces(this.player);
         let chosen = pieces[Math.floor(Math.random()*pieces.length)];
         let values = [];
-        let actions = getAllActions(chosen);
+        let actions = getAllActions(chosen, this.memoryBoard, this.player);
         var alpha = -Infinity;
         var beta = Infinity;
         let v = -Infinity;
@@ -166,7 +166,7 @@ class HalmaAI {
         }
         let pieces = state.getPlayerPieces(this.player);
         let chosen = pieces[Math.floor(Math.random()*pieces.length)];
-        let actions = getAllActions(pieces[i]);
+        let actions = getAllActions(chosen, state, this.player);
         let v = -Infinity;
         for (j = 0; j < actions.length; j++) {
             update = state.copyCons()
@@ -186,7 +186,7 @@ class HalmaAI {
         }
         let pieces = state.getPlayerPieces(this.opponent);
         let chosen = pieces[Math.floor(Math.random()*pieces.length)];
-        let actions = getAllActions(pieces[i]);
+        let actions = getAllActions(chosen, state, this.opponent);
         let v = -Infinity;
         for (j = 0; j < actions.length; j++) {
             update = state.copyCons()
@@ -195,7 +195,7 @@ class HalmaAI {
             if (v <= alpha) {
                 return v;
             }
-            alpha = Math.max(v, alpha)
+            beta = Math.min(v, beta)
         }
         return v;
     }

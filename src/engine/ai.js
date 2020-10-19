@@ -10,124 +10,50 @@ class HalmaAI {
 
     getAllStates(coord, board) {
     	var states = []
-        var up = new Action(this.player, coord, new Coordinate(x, y + 1));
-        if (up.isLegal()) {
-            states.push(board.copyCons().updateBoard(up))
+        var coord = []
+        var x = coord.getX()
+        var y = coord.getY()
+        coord.push(new Coordinate(x, y + 1));
+        coord.push(new Coordinate(x, y - 1));
+        coord.push(new Coordinate(x + 1, y));
+        coord.push(new Coordinate(x - 1, y));
+        coord.push(new Coordinate(x + 1, y + 1));
+        coord.push(new Coordinate(x + 1, y - 1));
+        coord.push(new Coordinate(x - 1, y + 1));
+        coord.push(new Coordinate(x - 1, y - 1));
+        for (i = 0; i < coord.length; i++) {
+            action = new Action(this.player, coord, coord[i])
+            if action.isLegal() {
+                states.push(board.copyCons().updateBoard(action))
+            }
         }
-        else {
-            states.concat(getAllHops(up.getAfterCoord(),board))
-        }
-        var down = new Action(this.player, coord, new Coordinate(x, y - 1));
-        if (down.isLegal()) {
-            states.push(board.copyCons().updateBoard(down))
-        }
-        else {
-            states.concat(getAllHops(down.getAfterCoord(),board))
-        }
-        var right = new Action(this.player, coord, new Coordinate(x + 1, y));
-        if (right.isLegal()) {
-            states.push(board.copyCons().updateBoard(right))
-        }
-        else {
-            states.concat(getAllHops(right.getAfterCoord(),board))
-        }
-        var left = new Action(this.player, coord, new Coordinate(x - 1, y));
-        if (left.isLegal()) {
-            states.push(board.copyCons().updateBoard(left))
-        }
-        else {
-            states.concat(getAllHops(left.getAfterCoord(),board))
-        }
-        var upright = new Action(this.player, coord, new Coordinate(x + 1, y + 1));
-        if (upright.isLegal()) {
-            states.push(board.copyCons().updateBoard(upright))
-        }
-        else {
-            states.concat(getAllHops(upright.getAfterCoord(),board))
-        }
-        var upleft = new Action(this.player, coord, new Coordinate(x - 1, y + 1));
-        if (upleft.isLegal()) {
-            states.push(board.copyCons().updateBoard(upleft))
-        }
-        else {
-            states.concat(getAllHops(upleft.getAfterCoord(),board))
-        }
-        var downright = new Action(this.player, coord, new Coordinate(x + 1, y - 1));
-        if (downright.isLegal()) {
-            states.push(board.copyCons().updateBoard(downright))
-        }
-        else {
-            states.concat(getAllHops(downright.getAfterCoord(),board))
-        }
-        var downleft = new Action(this.player, coord, new Coordinate(x - 1, y - 1));
-        if (downleft.isLegal()) {
-            states.push(board.copyCons().updateBoard(downleft))
-        }
-        else {
-            states.concat(getAllHops(downleft.getAfterCoord(),board))
-        }
+        states = states.concat(getAllHops(coord, board, coordlist))
     	return states;
     }
 
-    getAllHops(coord, board) {
-        var states = []
-        var up = new Action(this.player, coord, new Coordinate(x, y + 2));
-        if (up.isLegal()) {
-            states.push(board.copyCons().updateBoard(up))
+    getAllHops(coord, board, coordlist) {
+        var coords = []
+        var final = []
+        coords.push(new Coordinate(x, y + 2));
+        coords.push(new Coordinate(x, y - 2));
+        coords.push(new Coordinate(x + 2, y));
+        coords.push(new Coordinate(x - 2, y));
+        coords.push(new Coordinate(x + 2, y + 2));
+        coords.push(new Coordinate(x - 2, y + 2));
+        coords.push(new Coordinate(x + 2, y - 2));
+        coords.push(new Coordinate(x - 2, y - 2));
+        for (i = 0; i < coords.length - 1; i++) {
+            act = new Action(this.player, coord, coords[i])
+            if act.isLegal() {
+                if !coordlist.includes(coords[i]) {
+                    coordlist.push(coords[i])
+                    update = board.copyCons().updateBoard(act)
+                    final.push(update)
+                    final = final.concat(getAllHops(coords[i], update, coordlist))
+                }
+            }
         }
-        else {
-            states.concat(getAllHops(up.getAfterCoord(),board))
-        }
-        var down = new Action(this.player, coord, new Coordinate(x, y - 2));
-        if (down.isLegal()) {
-            states.push(board.copyCons().updateBoard(down))
-        }
-        else {
-            states.concat(getAllHops(down.getAfterCoord(),board))
-        }
-        var right = new Action(this.player, coord, new Coordinate(x + 2, y));
-        if (right.isLegal()) {
-            states.push(board.copyCons().updateBoard(right))
-        }
-        else {
-            states.concat(getAllHops(right.getAfterCoord(),board))
-        }
-        var left = new Action(this.player, coord, new Coordinate(x - 2, y));
-        if (left.isLegal()) {
-            states.push(board.copyCons().updateBoard(left))
-        }
-        else {
-            states.concat(getAllHops(left.getAfterCoord(),board))
-        }
-        var upright = new Action(this.player, coord, new Coordinate(x + 2, y + 1));
-        if (upright.isLegal()) {
-            states.push(board.copyCons().updateBoard(upright))
-        }
-        else {
-            states.concat(getAllHops(upright.getAfterCoord(),board))
-        }
-        var upleft = new Action(this.player, coord, new Coordinate(x - 2, y + 2));
-        if (upleft.isLegal()) {
-            states.push(board.copyCons().updateBoard(upleft))
-        }
-        else {
-            states.concat(getAllHops(upleft.getAfterCoord(),board))
-        }
-        var downright = new Action(this.player, coord, new Coordinate(x + 2, y - 2));
-        if (downright.isLegal()) {
-            states.push(board.copyCons().updateBoard(downright))
-        }
-        else {
-            states.concat(getAllHops(downright.getAfterCoord(),board))
-        }
-        var downleft = new Action(this.player, coord, new Coordinate(x - 2, y - 2));
-        if (downleft.isLegal()) {
-            states.push(board.copyCons().updateBoard(downleft))
-        }
-        else {
-            states.concat(getAllHops(downleft.getAfterCoord(),board))
-        }
-        return states;
+        return final;
     }
 
     /*getMove(algorithm) {

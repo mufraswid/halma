@@ -231,7 +231,7 @@ class HalmaBoard {
 
         var sum = 0
         for (var i = 0; i < playerPieces.length; i++) {
-            sum += Math.abs(playerPieces[i].getX() - xEnemyBase) + Math.abs(playerPieces[i].getY() - yEnemyBase) - Math.abs(playerPieces[i].getX() - xHomeBase) - Math.abs(playerPieces[i].getY() - yHomeBase) + 4*this.size
+            sum += -Math.abs(playerPieces[i].getX() - xEnemyBase) - Math.abs(playerPieces[i].getY() - yEnemyBase) + Math.abs(playerPieces[i].getX() - xHomeBase) + Math.abs(playerPieces[i].getY() - yHomeBase) + 4*this.size
             sum -= 4*this.size - Math.abs(enemyPieces[i].getX() - xEnemyBase) - Math.abs(enemyPieces[i].getY() - yEnemyBase) + 30*this.isOnHome(player, playerPieces[i])
         }
 

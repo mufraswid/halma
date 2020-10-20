@@ -54,7 +54,6 @@ class HalmaAI {
             if (act.isLegal(board)) {
                 if (!this.coordExist(coordlist, coords[i])) {
                     coordlist.push(coords[i])
-                    console.log(coords[i])
                     var update = board.copyCons()
                     update.updateBoard(act)
                     final.push(new Action(player, origin, coords[i]))
@@ -87,7 +86,6 @@ class HalmaAI {
         var actions = []
         var values = []
         var pieces = this.memoryBoard.getPlayerPieces(this.player);
-        console.log(pieces)
         for (var i = 0; i < pieces.length; i++) {
             actions = actions.concat(this.getAllActions(pieces[i], this.memoryBoard, this.player))
         }
@@ -106,7 +104,7 @@ class HalmaAI {
             alpha = Math.max(v, alpha)
         }
         var indexmax = values.indexOf(v)
-        console.log(indexmax)
+        console.log(v)
         return actions[indexmax];
     }
 

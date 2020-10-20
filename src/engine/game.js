@@ -4,11 +4,11 @@
  */
 function initAI() {
     if (mode == 'PC' || mode == 'PCL') {
-        AI1 = new HalmaAI(gameBoard, 2, 'C', 'P')
+        AI1 = new HalmaAI(gameBoard, 3, 'C', 'P')
     }
     else if (mode == 'CCL') {
-        AI1 = new HalmaAI(gameBoard, 2, 'C', 'K')
-        AI2 = new HalmaAI(gameBoard, 2, 'K', 'C')
+        AI1 = new HalmaAI(gameBoard, 3, 'C', 'K')
+        AI2 = new HalmaAI(gameBoard, 3, 'K', 'C')
     }
 }
 
@@ -148,19 +148,18 @@ function nextTurn() {
     /* AI move */
     if (turn == 'K') {
         /* AI process */
-        console.log(gameBoard.getPlayerPieces('P'))
-        console.log(gameBoard.getPlayerPieces('C'))
         AI2.setBoard(gameBoard)
-        var aiMove = AI2.getMove('minimax-only')
-        console.log(aiMove)
+        var aiMove = AI2.getMove('minimax-localsearch')
         gameBoard.updateBoard(aiMove)
         gameBoard.renderBoard()
     } else {
-        console.log(gameBoard.getPlayerPieces('P'))
-        console.log(gameBoard.getPlayerPieces('C'))
         AI1.setBoard(gameBoard)
-        var aiMove = AI1.getMove('minimax-only')
-        console.log(aiMove)
+        if (mode == 'PCL' || mode == 'CCL') {
+            var aiMove = AI1.getMove('minimax-localsearch')
+        }
+        else {
+            var aiMove = AI1.getMove('minimax-only')
+        }
         gameBoard.updateBoard(aiMove)
         gameBoard.renderBoard()
     }

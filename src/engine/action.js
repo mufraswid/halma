@@ -98,7 +98,6 @@ class Action {
     isLegal(board) {
 
         if (!this.beforeCoord.isWithinBoard(board) || !this.afterCoord.isWithinBoard(board)) {
-            console.log("ILLEGAL")
             return false
         }
 

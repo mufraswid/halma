@@ -1,4 +1,3 @@
-
 /**
  * @desc Inisialisasi AI yang bermain
  */
@@ -64,8 +63,6 @@ function actionListener(ncell) {
     /* Convert to coords */
     let x = ncell % bsize
     let y = Math.floor(ncell / bsize)
-
-    console.log(x, y)
 
     /* Block if not player turn */
     if (turn != 'P') {
@@ -146,10 +143,12 @@ function nextTurn() {
     if (turn == 'P') return
 
     /* AI move */
+    var starttime = new Date()
     if (turn == 'K') {
         /* AI process */
         AI2.setBoard(gameBoard)
         var aiMove = AI2.getMove('minimax-localsearch')
+        time1.push((new Date() - starttime) / 1000)
         gameBoard.updateBoard(aiMove)
         gameBoard.renderBoard()
     } else {
@@ -160,8 +159,10 @@ function nextTurn() {
         else {
             var aiMove = AI1.getMove('minimax-only')
         }
+        time2.push((new Date() - starttime) / 1000)
         gameBoard.updateBoard(aiMove)
         gameBoard.renderBoard()
+        
     }
 }
 
@@ -172,6 +173,28 @@ function nextTurn() {
 function endGame(winner) {
     timer.stop()
     alert("Pemenangnya adalah Player" + winner + "!")
+
+    /* Analisis waktu */
+    var sum1 = 0
+    var sum2 = 0
+    var mean1 = 0
+    var mean2 = 0
+    for (var i = 0; i < time1.length; i++) {
+        sum1 += time1[i]
+    }
+    for (var i = 0; i < time2.length; i++) {
+        sum2 += time2[i]
+    }
+    if(time1.length > 0) {
+        mean1 = sum1 / time1.length
+    }
+    if(time2.length > 0) {
+        mean2 = sum2 / time2.length
+    } 
+    console.log("sum1", sum1)
+    console.log("sum2", sum2)
+    console.log("mean1", mean1)
+    console.log("mean2", mean2)
 }
 
 /**
@@ -211,10 +234,10 @@ function renderTurn() {
 
 
 /* Test pass variable */
-console.log(localStorage.getItem('bsize'))
-console.log(localStorage.getItem('pcolor'))
-console.log(localStorage.getItem('mode'))
-console.log(localStorage.getItem('tlimit'))
+// console.log(localStorage.getItem('bsize'))
+// console.log(localStorage.getItem('pcolor'))
+// console.log(localStorage.getItem('mode'))
+// console.log(localStorage.getItem('tlimit'))
 
 /* Get param */
 var bsize = localStorage.getItem('bsize')
@@ -239,6 +262,10 @@ var timer = new Timer(nextTurn, tlimit)
 /* Init AI vars */
 var AI1 = null
 var AI2 = null
+
+/* Init time buffer */
+var time1 = []
+var time2 = []
 
 /* Init game */
 initGame()

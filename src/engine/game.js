@@ -200,29 +200,33 @@ function renderTurn() {
 }
 
 
-/* Get param */
-// var mode = localStorage.getItem('mode')
-// var tlimit = localStorage.getItem('tlimit')
-var bsize = localStorage.getItem('bsize')
-var mode = 'PC'
-var tlimit = 6000
-var bsize = 8
-
 /* Test pass variable */
 console.log(localStorage.getItem('bsize'))
-console.log(localStorage.getItem('p1color'))
-console.log(localStorage.getItem('p2color'))
+console.log(localStorage.getItem('pcolor'))
+console.log(localStorage.getItem('mode'))
+console.log(localStorage.getItem('time'))
+
+/* Get param */
+var bsize = localStorage.getItem('bsize')
+var pcolor = localStorage.getItem('pcolor')
+var tlimit = localStorage.getItem('time') * 1000
+// var mode = localStorage.getItem('mode')
+var mode = 'PC'
 
 /* Rep players here */
-var repP1 = '<div ><svg width="80" height="80"><circle cx="40" cy="40" r="30" stroke="rgb(240,74,74)" stroke-width="8" fill="rgb(193,32,32)" /></svg></div>'
-var repP2 = '<div ><svg width="80" height="80"><circle cx="40" cy="40" r="30" stroke="rgb(30,185,92)" stroke-width="8" fill="rgb(23,154,60)" /></svg></div>'
+var red = '<div ><svg width="80" height="80"><circle cx="40" cy="40" r="30" stroke="rgb(240,74,74)" stroke-width="8" fill="rgb(193,32,32)" /></svg></div>'
+var green = '<div ><svg width="80" height="80"><circle cx="40" cy="40" r="30" stroke="rgb(30,185,92)" stroke-width="8" fill="rgb(23,154,60)" /></svg></div>'
 var empty = '<div class="emp"></div>'
-
 if (bsize == 16) {
-    repP1 = '<div ><svg width="60" height="60"><circle cx="30" cy="30" r="25" stroke="rgb(240,74,74)" stroke-width="5" fill="rgb(193,32,32)" /></svg></div>'
-    repP2 = '<div ><svg width="60" height="60"><circle cx="30" cy="30" r="25" stroke="rgb(30,185,92)" stroke-width="5" fill="rgb(23,154,60)" /></svg></div>'
+    red = '<div ><svg width="60" height="60"><circle cx="30" cy="30" r="25" stroke="rgb(240,74,74)" stroke-width="5" fill="rgb(193,32,32)" /></svg></div>'
+    green = '<div ><svg width="60" height="60"><circle cx="30" cy="30" r="25" stroke="rgb(30,185,92)" stroke-width="5" fill="rgb(23,154,60)" /></svg></div>'
     empty = '<div class="emp16"></div>'
 }
+
+/* Pick player color */
+var repP1 = (pcolor == red) ? red : green
+var repP2 = (pcolor == red) ? green : red
+
 
 /* Init board components */
 var gameBoard = new HalmaBoard(bsize, mode, repP1, repP2, empty)

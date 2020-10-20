@@ -1,133 +1,166 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Bootstrap -->
-    <link rel="stylesheet"
-          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-          integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
-          crossorigin="anonymous" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
 
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
-          rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap"
+      rel="stylesheet"
+    />
 
     <link rel="stylesheet" href="./index.css" />
     <link rel="stylesheet" href="./option.css" />
     <link rel="stylesheet" href="./mainpage.css" />
     <title>Halma</title>
-
-</head>
-<body>
+  </head>
+  <body>
     <div class="mainpage-container">
-        <div class="overlay">
-            <div class="option-window container-sm">
-                <h1 class="option-title">Game Settings</h1>
-                
-                <form id="inpform" class="form">
-                    <div class="options">
-                        <div class="option-submenu">
-                            <h2 class="option-subtitle">Board Size</h2>
-                            <div class="form-check">
-                                <input class="form-check-input"
-                                       name="boardSize"
-                                       type="radio"
-                                       id="size8"
-                                       value="8" />
-                                <label class="form-check-label" for="size8"> 8x8 </label>
-                            </div>
+      <div class="overlay">
+        <div class="option-window container-sm">
+          <h1 class="option-title">Game Settings</h1>
 
-                            <div class="form-check">
-                                <input class="form-check-input"
-                                       name="boardSize"
-                                       type="radio"
-                                       id="size10"
-                                       value="10" />
-                                <label class="form-check-label" for="size10"> 10x10 </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input"
-                                       name="boardSize"
-                                       type="radio"
-                                       id="size16"
-                                       value="16" />
-                                <label class="form-check-label" for="size16"> 16x16 </label>
-                            </div>
-                        </div>
+          <form
+            id="inpform"
+            class="form"
+            action="#"
+            onsubmit="redirectAndStore(); return false"
+          >
+            <div class="options">
+              <div class="option-submenu">
+                <h2 class="option-subtitle">Board Size</h2>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    name="boardSize"
+                    type="radio"
+                    id="size8"
+                    value="8"
+                  />
+                  <label class="form-check-label" for="size8"> 8x8 </label>
+                </div>
 
-                        <div class="option-submenu">
-                            <h2 class="option-subtitle">Pawn Color</h2>
-                            <div class="color-player1">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input"
-                                           name="p1color"
-                                           type="radio"
-                                           id="p1red"
-                                           value="red" />
-                                    <label class="form-check-label" for="p1red"> Red </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input"
-                                           name="p1color"
-                                           type="radio"
-                                           id="p1green"
-                                           value="green" />
-                                    <label class="form-check-label" for="p1green"> Green</label>
-                                </div>
-                            </div>
-                        </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    name="boardSize"
+                    type="radio"
+                    id="size10"
+                    value="10"
+                  />
+                  <label class="form-check-label" for="size10"> 10x10 </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    name="boardSize"
+                    type="radio"
+                    id="size16"
+                    value="16"
+                  />
+                  <label class="form-check-label" for="size16"> 16x16 </label>
+                </div>
+              </div>
 
-                        <div class="option-submenu">
-                            <h2 class="option-subtitle">Mode</h2>
-                            <div class="form-check">
-                                <input class="form-check-input"
-                                       name="mode"
-                                       type="radio"
-                                       id="mode1"
-                                       value="1" />
-                                <label class="form-check-label" for="mode1"> Player v. AI Minimax </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input"
-                                       name="mode"
-                                       type="radio"
-                                       id="mode2"
-                                       value="2" />
-                                <label class="form-check-label" for="mode2"> Player v. AI Minimax Local Search </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input"
-                                       name="mode"
-                                       type="radio"
-                                       id="mode3"
-                                       value="3" />
-                                <label class="form-check-label" for="mode3"> AI Minimax v. AI Minimax Local Search </label>
-                            </div>
-                        </div>
+              <div class="option-submenu">
+                <h2 class="option-subtitle">Pawn Color</h2>
+                <div class="color-player1">
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      name="pcolor"
+                      type="radio"
+                      id="pred"
+                      value="red"
+                    />
+                    <label class="form-check-label" for="pred"> Red </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      name="pcolor"
+                      type="radio"
+                      id="pgreen"
+                      value="green"
+                    />
+                    <label class="form-check-label" for="pgreen"> Green</label>
+                  </div>
+                </div>
+              </div>
 
-                        <div class="option-submenu">
-                            <h2 class="option-subtitle">Time</h2>
-                            <div class="form-check">
-                                <input class="form-check-input"
-                                       name="time"
-                                       type="text"
-                                       id="tlimit"
-                                       value="" />
-                                <label class="form-check-label" for="tlimit"> Time </label>
-                            </div>
-                        </div>
+              <div class="option-submenu">
+                <h2 class="option-subtitle">Mode</h2>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    name="mode"
+                    type="radio"
+                    id="mode1"
+                    value="1"
+                  />
+                  <label class="form-check-label" for="mode1">
+                    Player v. AI Minimax
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    name="mode"
+                    type="radio"
+                    id="mode2"
+                    value="2"
+                  />
+                  <label class="form-check-label" for="mode2">
+                    Player v. AI Minimax Local Search
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    name="mode"
+                    type="radio"
+                    id="mode3"
+                    value="3"
+                  />
+                  <label class="form-check-label" for="mode3">
+                    AI Minimax v. AI Minimax Local Search
+                  </label>
+                </div>
+              </div>
 
-                    </div>
-                </form>
-                <button onclick="redirectAndStore()" class="btn btn-primary submit">
-                    Start Game!
-                </button>
+              <div class="option-submenu">
+                <h2 class="option-subtitle">Time</h2>
+                <div class="form-group col">
+                  <input
+                    class="form-input row"
+                    name="tlimit"
+                    id="tlimit"
+                    type="number"
+                    min="1"
+                    max="120"
+                    step="1"
+                    value="5"
+                  />
+                  <label class="form-label row" for="tlimit"> seconds </label>
+                </div>
+              </div>
             </div>
+          </form>
+          <button onclick="redirectAndStore()" class="btn btn-primary submit">
+            Start Game!
+          </button>
         </div>
+      </div>
     </div>
-    <script src='engine/jquery.js'></script>
-    <script src="index.js"></script>
+    <script src="engine/jquery.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</body>
-
+    <script src="index.js"></script>
+  </body>
 </html>

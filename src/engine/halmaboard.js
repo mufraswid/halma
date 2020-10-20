@@ -30,11 +30,6 @@ class HalmaBoard {
 
         this.player1Pieces = []
         this.player2Pieces = []
-        // this.player1Color = localStorage.getItem('p1color')
-        // this.player2Color = localStorage.getItem('p2color')
-        /* testing purposes */
-        this.player1Color = 'red'
-        this.player2Color = 'green'
 
         this.repP1 = repP1
         this.repP2 = repP2
@@ -102,13 +97,10 @@ class HalmaBoard {
             let y = Math.floor(i / this.size)
             if (this.board[x][y] == this.player1) {
                 $('#cell' + i).html(this.repP1)
-                // $('#cell' + i).css('background-color', this.player1Color)
             } else if (this.board[x][y] == this.player2) {
                 $('#cell' + i).html(this.repP2)
-                // $('#cell' + i).css('background-color', this.player2Color)
             } else {
                 $('#cell' + i).html(this.empty)
-                // $('#cell' + i).css('background-color', 'white')
             }
         }
     }
@@ -208,7 +200,7 @@ class HalmaBoard {
         var enemyPieces = (player == this.player1) ? this.player2Pieces : this.player1Pieces
 
         var sum = 0
-        for(var i = 0; i < playerPieces.length; i++) {
+        for (var i = 0; i < playerPieces.length; i++) {
             sum += Math.abs(playerPieces[i].getX() - xEnemyBase) + Math.abs(playerPieces[i].getY() - yEnemyBase)
             sum -= Math.abs(enemyPieces[i].getX() - xEnemyBase) + Math.abs(enemyPieces[i].getY() - yEnemyBase)
         }

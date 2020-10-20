@@ -38,8 +38,8 @@ class HalmaBoard {
         var green = '<div ><svg width="80" height="80"><circle cx="40" cy="40" r="30" stroke="rgb(30,185,92)" stroke-width="8" fill="rgb(23,154,60)" /></svg></div>'
         this.empty = '<div class="emp"></div>'
         if (bsize == 16) {
-            red = '<div ><svg width="60" height="60"><circle cx="30" cy="30" r="25" stroke="rgb(240,74,74)" stroke-width="5" fill="rgb(193,32,32)" /></svg></div>'
-            green = '<div ><svg width="60" height="60"><circle cx="30" cy="30" r="25" stroke="rgb(30,185,92)" stroke-width="5" fill="rgb(23,154,60)" /></svg></div>'
+            red = '<div ><svg width="50" height="50"><circle cx="25" cy="25" r="20" stroke="rgb(240,74,74)" stroke-width="5" fill="rgb(193,32,32)" /></svg></div>'
+            green = '<div ><svg width="50" height="50"><circle cx="25" cy="25" r="20" stroke="rgb(30,185,92)" stroke-width="5" fill="rgb(23,154,60)" /></svg></div>'
             this.empty = '<div class="emp16"></div>'
         }
 
@@ -205,15 +205,15 @@ class HalmaBoard {
         this.board[xBefore][yBefore] = '-';
         this.board[xAfter][yAfter] = player;
 
-        if(player == this.player1) {
+        if (player == this.player1) {
             for (var i = 0; i < this.player1Pieces.length; i++) {
-                if(this.player1Pieces[i].equal(new Coordinate(xBefore, yBefore))) {
+                if (this.player1Pieces[i].equal(new Coordinate(xBefore, yBefore))) {
                     this.player1Pieces[i] = new Coordinate(xAfter, yAfter)
                 }
             }
         } else {
             for (var i = 0; i < this.player2Pieces.length; i++) {
-                if(this.player2Pieces[i].equal(new Coordinate(xBefore, yBefore))) {
+                if (this.player2Pieces[i].equal(new Coordinate(xBefore, yBefore))) {
                     this.player2Pieces[i] = new Coordinate(xAfter, yAfter)
                 }
             }
@@ -232,8 +232,8 @@ class HalmaBoard {
 
         var sum = 0
         for (var i = 0; i < playerPieces.length; i++) {
-            sum += -Math.abs(playerPieces[i].getX() - xEnemyBase) - Math.abs(playerPieces[i].getY() - yEnemyBase) + Math.abs(playerPieces[i].getX() - xHomeBase) + Math.abs(playerPieces[i].getY() - yHomeBase) + 4*this.size + 30*this.isOnHome(enemy, playerPieces[i])
-            sum -= 4*this.size - Math.abs(enemyPieces[i].getX() - xEnemyBase) - Math.abs(enemyPieces[i].getY() - yEnemyBase) + 30*this.isOnHome(player, playerPieces[i])
+            sum += -Math.abs(playerPieces[i].getX() - xEnemyBase) - Math.abs(playerPieces[i].getY() - yEnemyBase) + Math.abs(playerPieces[i].getX() - xHomeBase) + Math.abs(playerPieces[i].getY() - yHomeBase) + 4 * this.size + 30 * this.isOnHome(enemy, playerPieces[i])
+            sum -= 4 * this.size - Math.abs(enemyPieces[i].getX() - xEnemyBase) - Math.abs(enemyPieces[i].getY() - yEnemyBase) + 30 * this.isOnHome(player, playerPieces[i])
         }
 
         return sum

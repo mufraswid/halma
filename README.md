@@ -11,7 +11,7 @@
 
 ## How To Run
 
-Untuk memulai program, bukalah file index.html pada browser pilihan Anda.
+Untuk memulai program, pada folder src bukalah file index.html pada browser pilihan Anda.
 Untuk memulai permainan:
 
 1. Pilih ukuran papan yang ingin digunakan untuk bermain.

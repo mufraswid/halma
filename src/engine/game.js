@@ -147,11 +147,14 @@ function nextTurn() {
     if (turn == 'K') {
         /* AI process */
     } else {
+        console.log(gameBoard.getPlayerPieces('P'))
+        console.log(gameBoard.getPlayerPieces('C'))
         AI1.setBoard(gameBoard)
         var aiMove = AI1.getMove('minimax-only')
+        console.log(aiMove)
         gameBoard.updateBoard(aiMove)
         gameBoard.renderBoard()
-        return
+        nextTurn()
     }
 }
 

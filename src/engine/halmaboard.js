@@ -140,10 +140,10 @@ class HalmaBoard {
      */
     getPlayerPieces(player) {
         if (player == 'P' || player == 'K') {
-            return this.player1Pieces
+            return [].concat(this.player1Pieces)
         }
         else if (player == 'C') {
-            return this.player2Pieces
+            return [].concat(this.player2Pieces)
         }
     }
 
@@ -186,8 +186,8 @@ class HalmaBoard {
 
         cc.player1 = this.player1
         cc.player2 = this.player2
-        cc.player1Pieces = this.player1Pieces
-        cc.player2Pieces = this.player2Pieces
+        cc.player1Pieces = [].concat(this.player1Pieces)
+        cc.player2Pieces = [].concat(this.player2Pieces)
         return cc
     }
 
@@ -204,6 +204,20 @@ class HalmaBoard {
 
         this.board[xBefore][yBefore] = '-';
         this.board[xAfter][yAfter] = player;
+
+        if(player == this.player1) {
+            for (var i = 0; i < this.player1Pieces.length; i++) {
+                if(this.player1Pieces[i].equal(new Coordinate(xBefore, yBefore))) {
+                    this.player1Pieces[i] = new Coordinate(xAfter, yAfter)
+                }
+            }
+        } else {
+            for (var i = 0; i < this.player2Pieces.length; i++) {
+                if(this.player2Pieces[i].equal(new Coordinate(xBefore, yBefore))) {
+                    this.player2Pieces[i] = new Coordinate(xAfter, yAfter)
+                }
+            }
+        }
     }
 
     objFunc(player) {

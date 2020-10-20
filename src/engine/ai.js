@@ -76,6 +76,7 @@ class HalmaAI {
         var actions = []
         var values = []
         var pieces = this.memoryBoard.getPlayerPieces(this.player);
+        console.log(pieces)
         for (var i = 0; i < pieces.length; i++) {
             actions = actions.concat(this.getAllActions(pieces[i], this.memoryBoard, this.player))
         }
@@ -206,7 +207,7 @@ class HalmaAI {
     }
 
     setBoard(board) {
-        this.memoryBoard = board
+        this.memoryBoard = board.copyCons()
     }
 
 }

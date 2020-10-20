@@ -42,17 +42,6 @@ function initListener() {
     }
 
     arr.forEach(listen)
-    $('#endTurn').on('click', () => {
-        if (turn != 'P') {
-            console.log("THIS IS NOT YOUR TURN!")
-
-            // ! Testing Purposes
-            // nextTurn()
-        }
-        else {
-            nextTurn()
-        }
-    })
 }
 
 /**
@@ -121,11 +110,6 @@ function nextTurn() {
 
     if (mode == 'PC' || mode == 'PCL') {
         turn = (turn == 'P') ? 'C' : 'P'
-        if (turn == 'C') {
-            $('#endTurn').attr('disabled', true)
-        } else {
-            $('#endTurn').attr('disabled', false)
-        }
 
     } else {
         turn = (turn == 'K') ? 'C' : 'K'
@@ -162,7 +146,7 @@ function nextTurn() {
         time2.push((new Date() - starttime) / 1000)
         gameBoard.updateBoard(aiMove)
         gameBoard.renderBoard()
-        
+
     }
 }
 
@@ -185,12 +169,12 @@ function endGame(winner) {
     for (var i = 0; i < time2.length; i++) {
         sum2 += time2[i]
     }
-    if(time1.length > 0) {
+    if (time1.length > 0) {
         mean1 = sum1 / time1.length
     }
-    if(time2.length > 0) {
+    if (time2.length > 0) {
         mean2 = sum2 / time2.length
-    } 
+    }
     console.log("sum1", sum1)
     console.log("sum2", sum2)
     console.log("mean1", mean1)

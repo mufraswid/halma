@@ -154,7 +154,7 @@ function nextTurn() {
         gameBoard.renderBoard()
     } else {
         AI1.setBoard(gameBoard)
-        if (mode == 'PCL' || mode == 'CCL') {
+        if (mode == 'PCL') {
             var aiMove = AI1.getMove('minimax-localsearch')
         }
         else {

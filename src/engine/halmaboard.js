@@ -259,8 +259,8 @@ class HalmaBoard {
             }
         }
 
-        if (player1Win) return 1
         if (player2Win) return 2
+        if (player1Win) return 1
         return 0
     }
 
@@ -283,13 +283,13 @@ class HalmaBoard {
             if ((coord.equal(new Coordinate(0, this.size - base)) || coord.equal(new Coordinate(base, 0))) && this.size == 16) {
                 return false
             }
-            return coord.getX() <= coord.getY() - this.size + base
+            return coord.getX() <= (coord.getY() - this.size + base)
         } else {
             /* Corner case on the tip of the base */
             if ((coord.equal(new Coordinate(this.size - base, 0)) || coord.equal(new Coordinate(0, base))) && this.size == 16) {
                 return false
             }
-            return coord.getX() >= coord.getY() + this.size - base
+            return coord.getX() >= this.size - base + coord.getY()
         }
     }
 }

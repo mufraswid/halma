@@ -112,6 +112,6 @@ class Action {
         let afterIsEmpty = board.getBoard()[xAfter][yAfter] === '-';
         let moveOnProximity = Math.abs(xAfter - xBefore) <= 1 && Math.abs(yAfter - yBefore) <= 1;
 
-        return pieceIsExecutors && afterIsEmpty && (moveOnProximity || this.isHopping(board)) && !this.isGoBackHome(board);
+        return pieceIsExecutors && afterIsEmpty && !this.isExitingEnemyHome(board) && (moveOnProximity || this.isHopping(board)) && !this.isGoBackHome(board);
     }
 }

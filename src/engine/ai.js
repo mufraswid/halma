@@ -104,7 +104,7 @@ class HalmaAI {
             alpha = Math.max(v, alpha)
         }
         var indexmax = values.indexOf(v)
-        console.log(v)
+        console.log(indexmax)
         return actions[indexmax];
     }
 

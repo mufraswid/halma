@@ -14,6 +14,10 @@ $('#inpform input').on('change', function () {
 
 function redirectAndStore() {
     // placeholder block buat err message
+    console.log(bsize)
+    console.log(pcolor)
+    console.log(mode)
+    console.log(tlimit)
     var err = pcolor == undefined || bsize == undefined || mode == undefined || tlimit == undefined || tlimit < 0
     if (err) {
         alert('ERROR')

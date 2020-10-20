@@ -204,32 +204,18 @@ function renderTurn() {
 console.log(localStorage.getItem('bsize'))
 console.log(localStorage.getItem('pcolor'))
 console.log(localStorage.getItem('mode'))
-console.log(localStorage.getItem('time'))
+console.log(localStorage.getItem('tlimit'))
 
 /* Get param */
 var bsize = localStorage.getItem('bsize')
 var pcolor = localStorage.getItem('pcolor')
-var tlimit = localStorage.getItem('time') * 1000
+var tlimit = localStorage.getItem('tlimit') * 1000
 // var mode = localStorage.getItem('mode')
 var mode = 'PC'
 
-/* Rep players here */
-var red = '<div ><svg width="80" height="80"><circle cx="40" cy="40" r="30" stroke="rgb(240,74,74)" stroke-width="8" fill="rgb(193,32,32)" /></svg></div>'
-var green = '<div ><svg width="80" height="80"><circle cx="40" cy="40" r="30" stroke="rgb(30,185,92)" stroke-width="8" fill="rgb(23,154,60)" /></svg></div>'
-var empty = '<div class="emp"></div>'
-if (bsize == 16) {
-    red = '<div ><svg width="60" height="60"><circle cx="30" cy="30" r="25" stroke="rgb(240,74,74)" stroke-width="5" fill="rgb(193,32,32)" /></svg></div>'
-    green = '<div ><svg width="60" height="60"><circle cx="30" cy="30" r="25" stroke="rgb(30,185,92)" stroke-width="5" fill="rgb(23,154,60)" /></svg></div>'
-    empty = '<div class="emp16"></div>'
-}
-
-/* Pick player color */
-var repP1 = (pcolor == red) ? red : green
-var repP2 = (pcolor == red) ? green : red
-
 
 /* Init board components */
-var gameBoard = new HalmaBoard(bsize, mode, repP1, repP2, empty)
+var gameBoard = new HalmaBoard(bsize, mode, pcolor)
 gameBoard.initBoard()
 gameBoard.renderBoard()
 
@@ -238,7 +224,6 @@ var actionBuffer = []
 var hopHistory = []
 var sec = tlimit;
 var counter = new Timer(renderTimer, 100);
-// counter.start();
 var timer = new Timer(nextTurn, tlimit)
 
 /* Init AI vars */

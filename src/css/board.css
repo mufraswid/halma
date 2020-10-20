@@ -16,23 +16,23 @@ tr:nth-child(even) > td:nth-child(odd) {
   border: solid 10px #367be1;
 }
 
-tr:nth-child(odd) > .p1:nth-child(even),
-tr:nth-child(even) > .p1:nth-child(odd) {
+tr:nth-child(odd) > .red:nth-child(even),
+tr:nth-child(even) > .red:nth-child(odd) {
   background-color: #e0abab;
 }
 
-tr:nth-child(even) > .p1:nth-child(even),
-tr:nth-child(odd) > .p1:nth-child(odd) {
+tr:nth-child(even) > .red:nth-child(even),
+tr:nth-child(odd) > .red:nth-child(odd) {
   background-color: #ffd9d9;
 }
 
-tr:nth-child(odd) > .p2:nth-child(even),
-tr:nth-child(even) > .p2:nth-child(odd) {
+tr:nth-child(odd) > .green:nth-child(even),
+tr:nth-child(even) > .green:nth-child(odd) {
   background-color: #abd6b7;
 }
 
-tr:nth-child(even) > .p2:nth-child(even),
-tr:nth-child(odd) > .p2:nth-child(odd) {
+tr:nth-child(even) > .green:nth-child(even),
+tr:nth-child(odd) > .green:nth-child(odd) {
   background-color: #d6fdf1;
 }
 

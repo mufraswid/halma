@@ -6,8 +6,10 @@ class HalmaBoard {
     /**
      * @desc Konstuktor
      * @param {integer} size 
+     * @param {string} mode 
+     * @param {string} pcolor 
      */
-    constructor(size, mode, repP1, repP2, empty) {
+    constructor(size, mode, pcolor) {
         this.size = size;
         this.board = [];
 
@@ -31,9 +33,20 @@ class HalmaBoard {
         this.player1Pieces = []
         this.player2Pieces = []
 
-        this.repP1 = repP1
-        this.repP2 = repP2
-        this.empty = empty
+        /* Rep players here */
+        var red = '<div ><svg width="80" height="80"><circle cx="40" cy="40" r="30" stroke="rgb(240,74,74)" stroke-width="8" fill="rgb(193,32,32)" /></svg></div>'
+        var green = '<div ><svg width="80" height="80"><circle cx="40" cy="40" r="30" stroke="rgb(30,185,92)" stroke-width="8" fill="rgb(23,154,60)" /></svg></div>'
+        this.empty = '<div class="emp"></div>'
+        if (bsize == 16) {
+            red = '<div ><svg width="60" height="60"><circle cx="30" cy="30" r="25" stroke="rgb(240,74,74)" stroke-width="5" fill="rgb(193,32,32)" /></svg></div>'
+            green = '<div ><svg width="60" height="60"><circle cx="30" cy="30" r="25" stroke="rgb(30,185,92)" stroke-width="5" fill="rgb(23,154,60)" /></svg></div>'
+            this.empty = '<div class="emp16"></div>'
+        }
+
+        /* Pick player color */
+        this.repP1 = (pcolor == "red") ? red : green
+        this.repP2 = (pcolor == "red") ? green : red
+
     }
 
     /**
@@ -54,7 +67,6 @@ class HalmaBoard {
                 for (let j = 0; j < size; j++) {
                     content = content.concat("<td id=\"cell");
                     content = content.concat(cellid);
-                    // if content.concat()
                     content = content.concat("\"> </td>");
                     cellid += 1;
                 }
@@ -64,22 +76,24 @@ class HalmaBoard {
         }(this.size))
 
         var offset = base
+        var p1 = pcolor;
+        var p2 = (pcolor == "red") ? "green" : "red";
 
         for (var i = 0; i < base; i++) {
             if (i > 0 && this.size == 16) {
                 this.board[xHomePoint + i][yHomePoint - offset] = this.player1
                 this.player1Pieces.push(new Coordinate(xHomePoint + i, yHomePoint - offset))
-                $('#cell' + this.getIdfromCoor(xHomePoint + i, yHomePoint - offset)).toggleClass("p1");
+                $('#cell' + this.getIdfromCoor(xHomePoint + i, yHomePoint - offset)).toggleClass(p1);
                 this.board[xEnemyPoint - i][yEnemyPoint + offset] = this.player2
                 this.player2Pieces.push(new Coordinate(xEnemyPoint - i, yEnemyPoint + offset))
-                $('#cell' + this.getIdfromCoor(xEnemyPoint - i, yEnemyPoint + offset)).toggleClass("p2");
+                $('#cell' + this.getIdfromCoor(xEnemyPoint - i, yEnemyPoint + offset)).toggleClass(p2);
             }
             for (var j = 0; j < offset; j++) {
                 /* Render ke papan */
                 this.board[xHomePoint + i][yHomePoint - j] = this.player1
                 this.board[xEnemyPoint - i][yEnemyPoint + j] = this.player2
-                $('#cell' + this.getIdfromCoor(xHomePoint + i, yHomePoint - j)).toggleClass("p1");
-                $('#cell' + this.getIdfromCoor(xEnemyPoint - i, yEnemyPoint + j)).toggleClass("p2");
+                $('#cell' + this.getIdfromCoor(xHomePoint + i, yHomePoint - j)).toggleClass(p1);
+                $('#cell' + this.getIdfromCoor(xEnemyPoint - i, yEnemyPoint + j)).toggleClass(p2);
                 /* Catat lokasi bidak setiap pemain */
                 this.player1Pieces.push(new Coordinate(xHomePoint + i, yHomePoint - j))
                 this.player2Pieces.push(new Coordinate(xEnemyPoint - i, yEnemyPoint + j))
@@ -158,7 +172,7 @@ class HalmaBoard {
      * @desc Mengembalikan objek HalmaBoard lain yang sama dengan objek ini
      */
     copyCons() {
-        var cc = new HalmaBoard(this.size, this.mode, this.repP1, this.repP2, this.empty)
+        var cc = new HalmaBoard(this.size, this.mode, this.pcolor)
         cc.board = []
 
         var innerRow

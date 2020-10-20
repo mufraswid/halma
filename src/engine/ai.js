@@ -28,7 +28,8 @@ class HalmaAI {
                 actions.push(action)
             }
         }
-        /*actions = actions.concat(this.getAllHops(coord, coord, board, coords, player))*/
+        coords.push(coord);
+        actions = actions.concat(this.getAllHops(coord, coord, board, coords, player))
     	return actions;
     }
 
@@ -161,10 +162,10 @@ class HalmaAI {
         var alpha = -Infinity;
         var beta = Infinity;
         var v = -Infinity;
-        for (j = 0; j < actions.length; j++) {
+        for (var j = 0; j < actions.length; j++) {
             var update = this.memoryBoard.copyCons()
             update.updateBoard(actions[j])
-            minval = this.minValueLS(update, alpha, beta, depth-1)
+            var minval = this.minValueLS(update, alpha, beta, depth-1)
             values.push(minval)
             v = Math.max(v, minval)
             if (v >= beta) {
@@ -184,7 +185,7 @@ class HalmaAI {
         var chosen = pieces[Math.floor(Math.random()*pieces.length)];
         var actions = this.getAllActions(chosen, state, this.player);
         var v = -Infinity;
-        for (j = 0; j < actions.length; j++) {
+        for (var j = 0; j < actions.length; j++) {
             var update = state.copyCons()
             update.updateBoard(actions[j])
             v = Math.max(v, this.minValueLS(update, alpha, beta, depth-1))
@@ -203,8 +204,8 @@ class HalmaAI {
         var pieces = state.getPlayerPieces(this.opponent);
         var chosen = pieces[Math.floor(Math.random()*pieces.length)];
         var actions = this.getAllActions(chosen, state, this.opponent);
-        var v = -Infinity;
-        for (j = 0; j < actions.length; j++) {
+        var v = Infinity;
+        for (var j = 0; j < actions.length; j++) {
             var update = state.copyCons()
             update.updateBoard(actions[j])
             v = Math.min(v, this.maxValueLS(update, alpha, beta, depth-1))

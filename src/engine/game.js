@@ -3,10 +3,12 @@
  * @desc Inisialisasi AI yang bermain
  */
 function initAI() {
-    if (mode == 'PC' || mode == 'CCL') {
-        AI1 = new HalmaAI(gameBoard, 1, 'C', 'P')
-    } else if (mode == 'PCL' || mode == 'CCL') {
-        /* MinMaxAILS = new HalmaAILS() */
+    if (mode == 'PC' || mode == 'PCL') {
+        AI1 = new HalmaAI(gameBoard, 2, 'C', 'P')
+    }
+    else if (mode == 'CCL') {
+        AI1 = new HalmaAI(gameBoard, 2, 'C', 'K')
+        AI2 = new HalmaAI(gameBoard, 2, 'K', 'C')
     }
 }
 
@@ -146,6 +148,13 @@ function nextTurn() {
     /* AI move */
     if (turn == 'K') {
         /* AI process */
+        console.log(gameBoard.getPlayerPieces('P'))
+        console.log(gameBoard.getPlayerPieces('C'))
+        AI2.setBoard(gameBoard)
+        var aiMove = AI2.getMove('minimax-only')
+        console.log(aiMove)
+        gameBoard.updateBoard(aiMove)
+        gameBoard.renderBoard()
     } else {
         console.log(gameBoard.getPlayerPieces('P'))
         console.log(gameBoard.getPlayerPieces('C'))
@@ -154,7 +163,6 @@ function nextTurn() {
         console.log(aiMove)
         gameBoard.updateBoard(aiMove)
         gameBoard.renderBoard()
-        nextTurn()
     }
 }
 
@@ -213,8 +221,8 @@ console.log(localStorage.getItem('tlimit'))
 var bsize = localStorage.getItem('bsize')
 var pcolor = localStorage.getItem('pcolor')
 var tlimit = localStorage.getItem('tlimit') * 1000
-// var mode = localStorage.getItem('mode')
-var mode = 'PC'
+var mode = localStorage.getItem('mode')
+//var mode = 'PC'
 
 
 /* Init board components */

@@ -224,13 +224,15 @@ class HalmaBoard {
         /* Fungsi objektif */
         var xEnemyBase = (player == this.player1) ? this.size - 1 : 0
         var yEnemyBase = (player == this.player1) ? 0 : this.size - 1
+        var xHomeBase = (player == this.player1) ? 0 : this.size - 1
+        var yHomeBase = (player == this.player1) ? this.size - 1 : 0
         var playerPieces = (player == this.player1) ? this.player1Pieces : this.player2Pieces
         var enemyPieces = (player == this.player1) ? this.player2Pieces : this.player1Pieces
 
         var sum = 0
         for (var i = 0; i < playerPieces.length; i++) {
-            sum += Math.abs(playerPieces[i].getX() - xEnemyBase) + Math.abs(playerPieces[i].getY() - yEnemyBase)
-            sum -= Math.abs(enemyPieces[i].getX() - xEnemyBase) + Math.abs(enemyPieces[i].getY() - yEnemyBase)
+            sum += Math.abs(playerPieces[i].getX() - xEnemyBase) + Math.abs(playerPieces[i].getY() - yEnemyBase) - Math.abs(playerPieces[i].getX() - xHomeBase) - Math.abs(playerPieces[i].getY() - yHomeBase) + 4*this.size
+            sum -= 4*this.size - Math.abs(enemyPieces[i].getX() - xEnemyBase) - Math.abs(enemyPieces[i].getY() - yEnemyBase) + 30*this.isOnHome(player, playerPieces[i])
         }
 
         return sum

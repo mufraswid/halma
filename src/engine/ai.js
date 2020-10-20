@@ -28,15 +28,15 @@ class HalmaAI {
                 actions.push(action)
             }
         }
-        actions = actions.concat(this.getAllHops(coord, coord, board, coords, player))
+        /*actions = actions.concat(this.getAllHops(coord, coord, board, coords, player))*/
     	return actions;
     }
 
     getAllHops(origin, beforejump, board, coordlist, player) {
         var coords = [];
         var final = [];
-        var x = coord.getX();
-        var y = coord.getY();
+        var x = beforejump.getX();
+        var y = beforejump.getY();
         coords.push(new Coordinate(x, y + 2));
         coords.push(new Coordinate(x, y - 2));
         coords.push(new Coordinate(x + 2, y));
@@ -51,8 +51,9 @@ class HalmaAI {
         for (var i = 0; i < coords.length - 1; i++) {
             var act = new Action(player, beforejump, coords[i])
             if (act.isLegal(board)) {
-                if (!coordlist.includes(coords[i])) {
+                if (!this.coordExist(coordlist, coords[i])) {
                     coordlist.push(coords[i])
+                    console.log(coords[i])
                     var update = board.copyCons()
                     update.updateBoard(act)
                     final.push(new Action(player, origin, coords[i]))
@@ -61,6 +62,15 @@ class HalmaAI {
             }
         }
         return final;
+    }
+
+    coordExist(coordlist, coord) {
+        for (var j = 0; j < coordlist.length; j++) {
+            if (coordlist[j].equal(coord)) {
+                return true;
+            }    
+        }
+        return false;
     }
 
     getMove(algorithm) {
